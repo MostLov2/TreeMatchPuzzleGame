@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Canvas
+  - Sound
+  - TreeSetPoint
+  - Slot
+  - ManagementSlot
+  - CamMovePoint
+  - EnemyMovePoint
+  - Chestnut
+  - Map
+  - FlySwatter
+  - Spray
+  - DragonflyStick
+  - Right
+  - Left
+  - Up
+  - Down
+  - ChestNutSpawnPoint
+  - Wall
+  - CatchPoint
+  - MiniAconSpawnPoint
+  - MiniGameCol
+  - MiniGameManager
+  - MiniGameCam
+  - Worm
+  - SparrowPointRight
+  - SparrowPointLeft
+  - SparrowFly
+  - ChestnutBug
+  - ChestnutBur
+  - TutorialCam
+  - ChestnutBurCheck
+  - Tree
+  - Egg
+  - Undefined
+  - Squirrel
+  - ChestBug
+  - LobbySquirrel
+  - MoveLPoint
+  - MoveRPoint
+  - Point
+  - HighCanvas
+  - MiddleCanvas
+  - LowCanvas
+  - MoreHighCanvas(PopUpPanel)
+  - Effect
+  - TimeChecker
+  - GoldenBug
+  - ItemSlot
+  - Item
+  - 0.LevelupCylinderYellow
+  - 1.LevelupCylinderWhite
+  - 2.LevelupCylinderGreen
+  - 3.LevelupCylinderBlue
+  - 4.LevelupCylinderPurple
+  - 5.LevelupCylinderRed
+  - Main
+  - LobbyBackGroundImage
+  - UI
+  - BeeHivePoint
+  - HiveLeaves
+  - Stun
+  - NinjaRabbit
+  - TotorialCanvas
+  - TreeSetManager
+  - TutorialManager
+  - Missile
+  - PopupCanvas
+  - GamePanel
+  - Tile
+  - Block
+  - CreateTile
+  - MoreHighCanvas
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - s\
+  - Water
+  - UI
+  - Mud
+  - asdf
+  - Map
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

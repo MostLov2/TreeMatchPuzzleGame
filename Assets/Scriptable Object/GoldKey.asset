@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dcfd53c6323db947b31e3343db7bdbb, type: 3}
+  m_Name: GoldKey
+  m_EditorClassIdentifier: 
+  itemName: GoldKey
+  itemExplain: ' You can use this item to open a golden chest'
+  itemType: 0
+  ItemQuantity: 0
+  ItemSprite: {fileID: 21300000, guid: fea888f81b6641d45abb0218e94ca936, type: 3}
