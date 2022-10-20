@@ -84,6 +84,7 @@ public class TileManager : MonoBehaviour
     Tile firstTile;
     Tile lastTile;
     public List<Tile> targetTiles = new List<Tile>();
+    public List<GameObject> targetBlock = new List<GameObject>();
     public HashSet<int> notDouble = new HashSet<int>();
     #endregion
     private void Awake()
@@ -95,8 +96,9 @@ public class TileManager : MonoBehaviour
         treeLevel = GameLogicManager.treeLevel;
         stickSkillLevel = MySqlSystem.dragonflyStickLevelPoint;
         spraySkillLevel = MySqlSystem.sprayLevelPoint;
-        //spraySkillLevel = 5;
-        //stickSkillLevel = 5;
+        treeLevel = 50;
+        spraySkillLevel = 5;
+        stickSkillLevel = 5;
         createTiles = GameObject.FindGameObjectWithTag("CreateTile").transform;
         ctiles = createTiles.GetComponentsInChildren<Transform>();
         createTile = new GameObject[8];
@@ -720,16 +722,6 @@ public class TileManager : MonoBehaviour
                     stunEffect[i].GetComponent<StunEffect>().SwapCount++;
 
                 }
-                for (int i = 0; i < tiles.Length; i++)
-                {
-                    if (!tiles[i].GetComponent<Tile>().isEmpty)
-                    {
-                        if (tiles[i].GetComponent<Tile>().blockColor == 5 && tile[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor == 5)
-                        {
-                            tile[i].GetComponent<Tile>().block.GetComponent<Block>().beeMonsterCount++;
-                        }
-                    }
-                }
             }
         }
         line0.Clear();
@@ -741,7 +733,7 @@ public class TileManager : MonoBehaviour
         line6.Clear();
         line7.Clear();
         yield return new WaitForSeconds(0.1f);
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < arrayColumn.tilesX[0].tilesScriptY.Count; i++)
         {
             if (!arrayColumn.tilesX[0].tilesScriptY[i].isEmpty)
             {
@@ -776,9 +768,9 @@ public class TileManager : MonoBehaviour
                 line0.Add(arrayColumn.tilesX[7].tilesScriptY[i].block);
             }
         }
-        for (int x = 0; x < 9; x++)
+        for (int y = 0; y < arrayColumn.tilesX.Length; y++)
         {
-            for (int y = 0; y < 8; y++)
+            for (int x = 0; x < arrayColumn.tilesX[y].tilesScriptY.Count; x++)
             {
                 arrayColumn.tilesX[y].tilesScriptY[x].isEmpty = false;
             }
@@ -1217,6 +1209,12 @@ public class TileManager : MonoBehaviour
                 StartGame.gameObject.SetActive(true);
             }
             EagleGauge.instance.EagleItem();
+            BeeHiveHpUp();
+            StunEffectOff();
+            MudEffectOff();
+            WevvilMakeEffect();
+            SquirrelAttack();
+            StartCoroutine(SquirrelEffectOff());
             EggtoWorm();
             BeeBlockAttack();
             WormtoWevvil();
@@ -1266,18 +1264,9 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
-        if(treeLevel >= 30)
-        {
-            BeeHiveHpUp();
-            StunEffectOff();
-        }
-        else
-        {
-            MudEffectOff();
-            WevvilMakeEffect();
-            SquirrelAttack();
-            StartCoroutine(SquirrelEffectOff());
-        }
+
+       
+
         for (int i = 0; i < destroyTempTile.Count; i++)
         {
             destroyTempTile[i].block = null;
@@ -1532,7 +1521,7 @@ public class TileManager : MonoBehaviour
         
         for (int i = 0; i < tiles.Length; i++)
         {
-            if (tiles[i].GetComponent<Tile>().block!= null&& tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount%3==0 && tiles[i].GetComponent<Tile>().blockColor == 10&& tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount!=0)
+            if (tiles[i].GetComponent<Tile>().block!= null&& tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount>=3 && tiles[i].GetComponent<Tile>().blockColor == 10&& tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount!=0)
             {
                 GameObject mudEffect = BlockEffectOPManager.instance.SetObject(5);
                 mudEffect.transform.position = tiles[i].transform.position;
@@ -1550,7 +1539,7 @@ public class TileManager : MonoBehaviour
         
         for (int i = 0; i < tiles.Length; i++)
         {
-            if (tiles[i].GetComponent<Tile>().block != null && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount % 4 == 0 && tiles[i].GetComponent<Tile>().blockColor == 9 && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount != 0)
+            if (tiles[i].GetComponent<Tile>().block != null && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount >= 4 && tiles[i].GetComponent<Tile>().blockColor == 9 && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount != 0)
             {
                 squirrelSkills.Clear();
                 GameObject squirrelSkill = BlockEffectOPManager.instance.SetObject(10);
@@ -1741,6 +1730,9 @@ public class TileManager : MonoBehaviour
     }
     IEnumerator StunBlock(Transform beePos, bool createStun,int tileNum)
     {
+        isSwapping = true;
+        yield return new WaitForSeconds(0.35f);
+        SoundManager.instance.PlaySFX(clip, 6, 1, 1);
         int randomNum = 0;
         for (int i = 0; i < 5; i++)
         {
@@ -1755,7 +1747,6 @@ public class TileManager : MonoBehaviour
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 sting.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 sting.transform.DOMove(tiles[randomNum].transform.position, 0.5f);
-                yield return new WaitForSeconds(0.5f);
                 sting.gameObject.SetActive(false);
                 GameObject effect = BlockEffectOPManager.instance.SetObject(12);
                 effect.gameObject.SetActive(true);
@@ -1822,17 +1813,17 @@ public class TileManager : MonoBehaviour
     }
     int RandomRabbitAttack()
     {
+        int returnNum = 0;
         int randomNum = Random.Range(0,tiles.Length);
         if(tiles[randomNum].GetComponent<Tile>().block.transform.childCount < 1&&tiles[randomNum].GetComponent<Tile>().block.GetComponent<Block>().blocktype == Block.BlockType.CHESTNUTBLOCK)
         {
-            return randomNum;
+            returnNum = randomNum;
         }
-        else
+        else if(tiles[randomNum].GetComponent<Tile>().block.transform.childCount >= 1)
         {
             RandomRabbitAttack();
-            
         }
-        return 0;
+        return returnNum;
     }
     IEnumerator EffectSoundMaker()
     {
@@ -2928,6 +2919,7 @@ public class TileManager : MonoBehaviour
     }
     IEnumerator UseEagleItem(Tile target, Tile SwappingTarget)
     {
+        isSwapping = true;
         yield return new WaitForSeconds(0.40f);
         useItem = true;
         if (target.blockColor == 14 && SwappingTarget.blockColor == 14)
@@ -2955,6 +2947,7 @@ public class TileManager : MonoBehaviour
                                     tiles[j].GetComponent<Tile>().block = null;
                                     if (tiles[j].GetComponent<Tile>().pos.y == 0)
                                     {
+                                        isSwapping = true;
                                         StartCoroutine(CreateEagleEffect(tiles[j].GetComponent<Tile>(), true));
                                     }
                                 }
@@ -2974,6 +2967,7 @@ public class TileManager : MonoBehaviour
                         tiles[i].GetComponent<Tile>().block = null;
                         if (tiles[i].GetComponent<Tile>().pos.x == 0)
                         {
+                            isSwapping = true;
                             StartCoroutine(CreateEagleEffect(tiles[i].GetComponent<Tile>(), false));
                         }
                     }
@@ -2999,6 +2993,7 @@ public class TileManager : MonoBehaviour
                                     tiles[j].GetComponent<Tile>().block = null;
                                     if (tiles[j].GetComponent<Tile>().pos.y == 0)
                                     {
+                                        isSwapping = true;
                                         StartCoroutine(CreateEagleEffect(tiles[j].GetComponent<Tile>(), true));
                                     }
                                 }
@@ -3018,6 +3013,7 @@ public class TileManager : MonoBehaviour
                         tiles[i].GetComponent<Tile>().block = null;
                         if (tiles[i].GetComponent<Tile>().pos.x == 0)
                         {
+                            isSwapping = true;
                             StartCoroutine(CreateEagleEffect(tiles[i].GetComponent<Tile>(), false));
                         }
                     }
@@ -3049,6 +3045,7 @@ public class TileManager : MonoBehaviour
                                     tiles[j].GetComponent<Tile>().block = null;
                                     if (tiles[j].GetComponent<Tile>().pos.y == 0)
                                     {
+                                        isSwapping = true;
                                         StartCoroutine(CreateEagleEffect(tiles[j].GetComponent<Tile>(), true));
                                     }
                                 }
@@ -3068,6 +3065,7 @@ public class TileManager : MonoBehaviour
                         tiles[i].GetComponent<Tile>().block = null;
                         if (tiles[i].GetComponent<Tile>().pos.x == 0)
                         {
+                            isSwapping = true;
                             StartCoroutine(CreateEagleEffect(tiles[i].GetComponent<Tile>(), false));
                         }
                     }
@@ -3108,6 +3106,7 @@ public class TileManager : MonoBehaviour
                                     tiles[j].GetComponent<Tile>().block = null;
                                     if (tiles[j].GetComponent<Tile>().pos.y == 0)
                                     {
+                                        isSwapping = true;
                                         StartCoroutine(CreateEagleEffect(tiles[j].GetComponent<Tile>(), true));
                                     }
                                 }
@@ -3127,6 +3126,7 @@ public class TileManager : MonoBehaviour
                         tiles[i].GetComponent<Tile>().block = null;
                         if (tiles[i].GetComponent<Tile>().pos.x == 0)
                         {
+                            isSwapping = true;
                             StartCoroutine(CreateEagleEffect(tiles[i].GetComponent<Tile>(), false));
                         }
                     }
@@ -3286,7 +3286,7 @@ public class TileManager : MonoBehaviour
                 tiles[i].GetComponent<Tile>().block = null;
                 tiles[i].GetComponent<Tile>().isEmpty = true;
             }
-            //WeaponLevel50
+            //WeaponLevel5
             if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, 2) && stickSkillLevel >= 5)
             {
                 tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
@@ -3375,7 +3375,7 @@ public class TileManager : MonoBehaviour
         {
             StartCoroutine(BoomItem(target.pos));
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         StartCoroutine(PullDownBlock());
     }
     IEnumerator UseSpray(Tile target,Tile SwappingTarget)
@@ -3387,13 +3387,13 @@ public class TileManager : MonoBehaviour
         {
            // ClearAllBlock();
         }
-        else if (target.blockColor != 13 && SwappingTarget.blockColor == 13)
-        {
-            SprayItem(SwappingTarget, target);
-        }
         else if (target.blockColor == 13 && SwappingTarget.blockColor != 13)
         {
             SprayItem(target, SwappingTarget);
+        }
+        else if (target.blockColor != 13 && SwappingTarget.blockColor == 13)
+        {
+            SprayItem(SwappingTarget, target);
         }
         yield return new WaitForSeconds(notDouble.Count*0.1f+0.3f);
         StartCoroutine(PullDownBlock());
@@ -3401,6 +3401,16 @@ public class TileManager : MonoBehaviour
     void SprayItem(Tile target, Tile swaptarget)
     {
         targetTiles.Clear();
+        targetBlock.Clear();
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            if (tiles[i].GetComponent<Tile>().blockColor == swaptarget.blockColor)
+            {
+
+                targetTiles.Add(tiles[i].GetComponent<Tile>());
+                targetBlock.Add(tiles[i].GetComponent<Tile>().block);
+            }
+        }
         GameObject sprayEffect = BlockEffectOPManager.instance.SetObject(22);
         sprayEffect.gameObject.SetActive(false);
         sprayEffect.transform.position = swaptarget.transform.position;
@@ -3431,32 +3441,20 @@ public class TileManager : MonoBehaviour
             sprayEffect.GetComponent<SprayShot>().beamAddColor = Color.magenta;
         }
         #endregion
-        for (int i = 0; i < tiles.Length; i++)
-        {
-            if(tiles[i].GetComponent<Tile>().blockColor == swaptarget.blockColor)
-            {
-                Debug.Log(swaptarget.blockColor);
-                targetTiles.Add(tiles[i].GetComponent<Tile>());
-            }
-        }
         SprayDestroyBlock(spraySkillLevel, sprayEffect);
     }
     void SprayDestroyBlock(int spraySkillLevel, GameObject sprayEffect)
     {
-        if (spraySkillLevel == 0)
+        if (spraySkillLevel <= 4)
         {
-            RandomNumNotDouble(1);
-            foreach (var num in notDouble)
+            if (targetTiles.Count >= spraySkillLevel+1)
             {
-                sprayEffect.GetComponent<SprayShot>().targets.Add(targetTiles[num].GetComponent<Tile>().transform);
-                sprayEffect.SetActive(true);
-                targetTiles[num].GetComponent<Tile>().isEmpty = true;
-            }            
-            notDouble.Clear();
-        }
-        else if (spraySkillLevel == 1)
-        {
-            RandomNumNotDouble(2);
+                RandomNumNotDouble(spraySkillLevel + 1);
+            }
+            else if(targetTiles.Count < spraySkillLevel + 1)
+            {
+                RandomNumNotDouble(targetTiles.Count);
+            }
             foreach (var num in notDouble)
             {
                 sprayEffect.GetComponent<SprayShot>().targets.Add(targetTiles[num].GetComponent<Tile>().transform);
@@ -3464,39 +3462,17 @@ public class TileManager : MonoBehaviour
                 targetTiles[num].GetComponent<Tile>().isEmpty = true;
             }
         }
-        else if (spraySkillLevel == 2)
+        else
         {
-            RandomNumNotDouble(3);
-            foreach (var num in notDouble)
+            
+            if (targetTiles.Count >= 8)
             {
-                sprayEffect.GetComponent<SprayShot>().targets.Add(targetTiles[num].GetComponent<Tile>().transform);
-                sprayEffect.SetActive(true);
-                targetTiles[num].GetComponent<Tile>().isEmpty = true;
+                RandomNumNotDouble(8);
             }
-        }
-        else if (spraySkillLevel == 3)
-        {
-            RandomNumNotDouble(4);
-            foreach (var num in notDouble)
+            else if (targetTiles.Count < 8)
             {
-                sprayEffect.GetComponent<SprayShot>().targets.Add(targetTiles[num].GetComponent<Tile>().transform);
-                sprayEffect.SetActive(true);
-                targetTiles[num].GetComponent<Tile>().isEmpty = true;
+                RandomNumNotDouble(targetTiles.Count);
             }
-        }
-        else if (spraySkillLevel == 4)
-        {
-            RandomNumNotDouble(5);
-            foreach (var num in notDouble)
-            {
-                sprayEffect.GetComponent<SprayShot>().targets.Add(targetTiles[num].GetComponent<Tile>().transform);
-                sprayEffect.SetActive(true);
-                targetTiles[num].GetComponent<Tile>().isEmpty = true;
-            }
-        }
-        else if (spraySkillLevel == 5)
-        {
-            RandomNumNotDouble(8);
             foreach (var num in notDouble)
             {
                 sprayEffect.GetComponent<SprayShot>().targets.Add(targetTiles[num].GetComponent<Tile>().transform);
@@ -3510,7 +3486,7 @@ public class TileManager : MonoBehaviour
     void RandomNumNotDouble(int max)
     {
         notDouble.Clear();
-        while (notDouble.Count <= max)
+        while (notDouble.Count < max)
         {
             int randomNum = Random.Range(0, targetTiles.Count);
             notDouble.Add(randomNum);

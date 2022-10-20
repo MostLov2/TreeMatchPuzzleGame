@@ -84,7 +84,11 @@ public class Block : MonoBehaviour
             hp = 1;
             TileManager.wormCount++;
         }
-        
+        if(gameObject.transform.childCount >= 2)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
     }
 
     public void OnDisable()
@@ -139,6 +143,15 @@ public class Block : MonoBehaviour
         else
         {
             count++;
+        }
+        if (gameObject.transform.childCount >= 2)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
+        if (gameObject.transform.childCount >= 1)
+        {
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
     void ChestnutEffect()

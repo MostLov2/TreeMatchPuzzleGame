@@ -57,14 +57,12 @@ public class SprayShot : MonoBehaviour
             beamEndPs.Play();   // 루프마다 한번씩 실행
 
             // 타겟이 맞았을 때 처리하는곳
-            Debug.Log("Did");
             targets[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp(); // 맞은 타겟을 지운다.
             targets[i].GetComponent<Tile>().block.gameObject.SetActive(false); // 맞은 타겟을 지운다.
             targets[i].GetComponent<Tile>().block = null; // 맞은 타겟을 지운다.
             
             yield return new WaitForSeconds(0.1f);  // 다음 발사까지 시간
         }
-        Debug.Log("Did1");
         targets.Clear();
         gameObject.SetActive(false);
     }

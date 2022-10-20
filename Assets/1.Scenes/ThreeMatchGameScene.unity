@@ -4343,6 +4343,7 @@ MonoBehaviour:
   fertilizerEffectP: {fileID: 0}
   eagleEffectP: {fileID: 0}
   stickEffectP: {fileID: 0}
+  sprayEffectP: {fileID: 0}
   redBlockEffect: []
   yellowBlockEffect: []
   greenBlockEffect: []
@@ -4365,6 +4366,7 @@ MonoBehaviour:
   fertilizerEffect: []
   eagleEffect: []
   stickEffect: []
+  sprayEffect: []
   targetPool: []
 --- !u!4 &653729530
 Transform:
@@ -6548,7 +6550,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 7
   m_TargetDisplay: 0
 --- !u!224 &1030437171
 RectTransform:
@@ -7734,7 +7736,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_TargetDisplay: 0
 --- !u!224 &1172963569
 RectTransform:
@@ -14282,6 +14284,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e9d02d599fbd8574ea6ed4089db5fbc4, type: 3}
   - {fileID: 8300000, guid: a7afb83373df6164d96478fc3ca41e4f, type: 3}
   - {fileID: 8300000, guid: 073230c5a973c4345ba7bd3df86fe5f6, type: 3}
+  - {fileID: 8300000, guid: 710533ad37f69504aa94d7b2bd9b8f9b, type: 3}
   targetPos: {x: 0, y: 0}
   destroyTile: []
   destroyTempTile: []
@@ -14291,6 +14294,7 @@ MonoBehaviour:
   skillPoint: {x: 0, y: 0}
   treeLevel: 35
   stickSkillLevel: 5
+  spraySkillLevel: 0
   hpUp: 0
   StartGame: {fileID: 0}
   arrayRow:
@@ -14402,7 +14406,10 @@ MonoBehaviour:
   line5: []
   line6: []
   line7: []
+  destroyBlock: []
   isHaveDestroyBlock: 0
+  targetTiles: []
+  targetBlock: []
 --- !u!114 &2030449077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14433,7 +14440,7 @@ MonoBehaviour:
   GameOverEffect1: {fileID: 0}
   GameOverCount: 0
   treeLevel: 0
-  gameTime: 0
+  gameTime: 100000
   chestPointMax: 0
   chestPointMin: 0
   fertilizerPointMax: 0

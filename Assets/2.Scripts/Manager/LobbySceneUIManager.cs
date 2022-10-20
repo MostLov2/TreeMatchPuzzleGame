@@ -78,7 +78,7 @@ public class LobbySceneUIManager : MonoBehaviour
     Image                                   dragonflyStickImage;
     [SerializeField]Text                                    spayLevel;
     [SerializeField]Text                                    dragonflystickDmg;
-    Text                                    spayDmg;
+    [SerializeField] Text                                    spayDmg;
     Text                                    spayShopDmgText;
     Text                                    dragonflystickShopDmgText;
     [Header("Notice")]
@@ -304,7 +304,15 @@ public class LobbySceneUIManager : MonoBehaviour
         spayShopDmgText.text = "DMG:" + sprayShopDMG;
         dragonflystickShopDmgText.text = "DMG:" + dragonShopDMG;
         dragonflyStickImage.sprite = BoomRange[MySqlSystem.dragonflyStickLevelPoint];
-        spayDmg.text = "TBU";
+        if(MySqlSystem.sprayLevelPoint != 5)
+        {
+            spayDmg.text = "Destroy " + MySqlSystem.sprayLevelPoint+1.ToString() + "Block";
+        }
+        else
+        {
+            spayDmg.text = "Destroy " + "8" + "Block";
+        }
+        
         dragonflystickDmg.text = "DMG: " + dragonDMG.ToString();
     }
     /// <summary>

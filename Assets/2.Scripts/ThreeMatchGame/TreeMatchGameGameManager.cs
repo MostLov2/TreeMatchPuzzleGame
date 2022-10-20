@@ -108,7 +108,7 @@ public class TreeMatchGameGameManager : MonoBehaviour
             }
             //Debug.Log(str);
             treeMatchGameBalance = JsonUtility.FromJson<TreeMatchGameBalance>(str);
-            gameTime = treeMatchGameBalance.game_time+600000;
+            gameTime = treeMatchGameBalance.game_time+100000;
             chestPointMax = treeMatchGameBalance.drop_max;
             chestPointMin = treeMatchGameBalance.drop_min;
             fertilizerPointMax = treeMatchGameBalance.fer_max;

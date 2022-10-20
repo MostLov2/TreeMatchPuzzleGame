@@ -18,14 +18,17 @@ public class SwappingBlock : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
         //Debug.Log(TileManager.instance.targetTile.GetComponent<Tile>().block.GetComponent<Block>().blocktype);
         if (TileManager.instance.targetTile.GetComponent<Tile>().block.GetComponent<Block>().blocktype ==Block.BlockType.CHESTNUTBLOCK|| TileManager.instance.targetTile.GetComponent<Tile>().block.GetComponent<Block>().blocktype == Block.BlockType.ITEM|| TileManager.instance.targetTile.GetComponent<Tile>().block != null)
         {
-               // Debug.Log("Didn't0");
-            if (!TileManager.instance.isSwapping)
+            if (TileManager.instance.targetTile.GetComponent<Tile>().block.GetComponent<Block>().blocktype != Block.BlockType.MONSTER)
             {
-                mousePos = Input.mousePosition;
-                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-                TileManager.instance.MousePos = mousePos;
-                //Debug.Log("Didn't");
-                TileManager.instance.SwappingBlock();
+                // Debug.Log("Didn't0");
+                if (!TileManager.instance.isSwapping)
+                {
+                    mousePos = Input.mousePosition;
+                    mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+                    TileManager.instance.MousePos = mousePos;
+                    //Debug.Log("Didn't");
+                    TileManager.instance.SwappingBlock();
+                }
             }
         }
         

@@ -70,8 +70,8 @@ public class ShopBuyButton : MonoBehaviour
     {
         if (MySqlSystem.sprayLevelPoint == 0)
         {
-            SprayDMGText.text = "2";
-            SprayDMGUpText.text = "3";
+            SprayDMGText.text = "1";
+            SprayDMGUpText.text = "2";
             SprayPriceText.text = "1,000";
             SprayLevelText.text = MySqlSystem.sprayLevelPoint.ToString();
             SprayLevelUpText.text = (MySqlSystem.sprayLevelPoint + 1).ToString();
@@ -79,8 +79,8 @@ public class ShopBuyButton : MonoBehaviour
         }
         if (MySqlSystem.sprayLevelPoint == 1)
         {
-            SprayDMGText.text = "3";
-            SprayDMGUpText.text = "7";
+            SprayDMGText.text = "2";
+            SprayDMGUpText.text = "3";
             SprayPriceText.text = "5,000";
             SprayLevelText.text = MySqlSystem.sprayLevelPoint.ToString();
             SprayLevelUpText.text = (MySqlSystem.sprayLevelPoint + 1).ToString();
@@ -88,8 +88,8 @@ public class ShopBuyButton : MonoBehaviour
         }
         if (MySqlSystem.sprayLevelPoint == 2)
         {
-            SprayDMGText.text = "4";
-            SprayDMGUpText.text = "7";
+            SprayDMGText.text = "3";
+            SprayDMGUpText.text = "4";
             SprayPriceText.text = "10,000";
             SprayLevelText.text = MySqlSystem.sprayLevelPoint.ToString();
             SprayLevelUpText.text = (MySqlSystem.sprayLevelPoint + 1).ToString();
@@ -97,8 +97,8 @@ public class ShopBuyButton : MonoBehaviour
         }
         if (MySqlSystem.sprayLevelPoint == 3)
         {
-            SprayDMGText.text = "7";
-            SprayDMGUpText.text = "10";
+            SprayDMGText.text = "4";
+            SprayDMGUpText.text = "5";
             SprayPriceText.text = "20,000";
             SprayLevelText.text = MySqlSystem.sprayLevelPoint.ToString();
             SprayLevelUpText.text = (MySqlSystem.sprayLevelPoint + 1).ToString();
@@ -106,8 +106,8 @@ public class ShopBuyButton : MonoBehaviour
         }
         if (MySqlSystem.sprayLevelPoint == 4)
         {
-            SprayDMGText.text = "10";
-            SprayDMGUpText.text = "20";
+            SprayDMGText.text = "5";
+            SprayDMGUpText.text = "8";
             SprayPriceText.text = "50,000";
             SprayLevelText.text = MySqlSystem.sprayLevelPoint.ToString();
             SprayLevelUpText.text = (MySqlSystem.sprayLevelPoint + 1).ToString();
@@ -115,7 +115,7 @@ public class ShopBuyButton : MonoBehaviour
         }
         if (MySqlSystem.sprayLevelPoint == 5)
         {
-            SprayDMGText.text = "20";
+            SprayDMGText.text = "8";
             SprayDMGUpText.text = "Max";
             SprayPriceText.text = "Max";
             SprayLevelText.text = MySqlSystem.sprayLevelPoint.ToString();

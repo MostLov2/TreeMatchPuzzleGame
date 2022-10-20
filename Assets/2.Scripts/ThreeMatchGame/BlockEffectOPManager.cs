@@ -82,7 +82,7 @@ public class BlockEffectOPManager : MonoBehaviour
         chestnutEffectP = Resources.Load<GameObject>("BlockEffect/ChestnutEffect");
         fertilizerEffectP = Resources.Load<GameObject>("BlockEffect/FertilizerEffect");
         eagleEffectP = Resources.Load<GameObject>("BlockEffect/BirdEffect");
-        stickEffectP = Resources.Load<GameObject>("BlockEffect/SmokeEffect_Boundary");
+        stickEffectP = Resources.Load<GameObject>("BlockEffect/BoomEffect");
         sprayEffectP = Resources.Load<GameObject>("BlockEffect/SprayShot");
 
         redBlockEffect = new GameObject[100];
@@ -266,7 +266,7 @@ public class BlockEffectOPManager : MonoBehaviour
         for (int i = 0; i < stickEffect.Length; i++)
         {
             stickEffect[i] = Instantiate<GameObject>(stickEffectP, transform.position, transform.rotation);
-            stickEffect[i].GetComponent<SmokeEffect>().smokeArea = TileManager.instance.stickSkillLevel;
+            //stickEffect[i].GetComponent<SmokeEffect>().smokeArea = TileManager.instance.stickSkillLevel;
             stickEffect[i].SetActive(false);
             stickEffect[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
             stickEffect[i].transform.localScale = Vector3.one;

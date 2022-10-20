@@ -106,7 +106,7 @@ public class UpdatePanelUI : MonoBehaviour
     /// </summary>
     public void GoogleStoreDownload()
     {
-        Application.OpenURL("https://play.google.com/store/apps/details?id=com.Qfora.TopBam");
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.Qfora.SatoBam");
         SceneManager.LoadScene("LoginScene");
     }
     /// <summary>

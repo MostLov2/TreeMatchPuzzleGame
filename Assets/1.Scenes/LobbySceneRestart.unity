@@ -3132,6 +3132,7 @@ MonoBehaviour:
   dragonflystickLevel: {fileID: 0}
   spayLevel: {fileID: 0}
   dragonflystickDmg: {fileID: 0}
+  spayDmg: {fileID: 0}
   treeObject: []
   Slot: []
   audioMixer: {fileID: 24100000, guid: 2f48eb84d5526c045911b5a58af35406, type: 2}
@@ -10117,7 +10118,7 @@ PrefabInstance:
     - target: {fileID: 7140401295658112086, guid: d56976f3ff022564f87b2023709254e7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e809d323a6b3a6f448c8dd8a3fbddac3, type: 3}
+      objectReference: {fileID: 21300000, guid: abdfa30923a01ab45b0719f72e925b53, type: 3}
     - target: {fileID: 7140401295658112086, guid: d56976f3ff022564f87b2023709254e7, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -10886,7 +10887,7 @@ PrefabInstance:
     - target: {fileID: 7140401295658112086, guid: d56976f3ff022564f87b2023709254e7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: b2844a95675003241b2713e634e44abc, type: 3}
+      objectReference: {fileID: 21300000, guid: 1ca18245a5ac9a644a7edd73bdce0c50, type: 3}
     - target: {fileID: 7140401295658112086, guid: d56976f3ff022564f87b2023709254e7, type: 3}
       propertyPath: m_Color.a
       value: 0.6862745
@@ -10905,7 +10906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8757181798507258314, guid: d56976f3ff022564f87b2023709254e7, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 170
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d56976f3ff022564f87b2023709254e7, type: 3}
