@@ -1450,6 +1450,11 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 벌집 피격시 벌 한마리 소환
+    /// </summary>
+    /// <param name="i"></param>
+    /// <returns></returns>
     public IEnumerator BeeHiveCreateBee(int i)
     {
         if (tiles[i].GetComponent<Tile>().blockColor == 6&&beeCount < 3)
@@ -1465,6 +1470,10 @@ public class TileManager : MonoBehaviour
             tiles[randomNum].GetComponent<Tile>().blockColor = 5;
         }
     }
+    /// <summary>
+    /// 벌 소환시 벌의 위치를 램덤한 위치로 지정
+    /// </summary>
+    /// <returns></returns>
     public int randomBlockNumMake()
     {
         int returnNum = 0;
@@ -1607,6 +1616,9 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 벌이 공격시 스턴 이펙트 출력 및 블록 사용 불가능 하게 변경
+    /// </summary>
     public void StunEffectOff()
     {
         for (int i = 0;i < tiles.Length; i++)
@@ -1719,15 +1731,19 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 턴이 
+    /// </summary>
     void BeeBlockAttack()
     {
         bool createStun = true;
         for (int i = 0; i < tiles.Length; i++)
         {
-            if (tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount%4 == 0 && tiles[i].GetComponent<Tile>().blockColor == 5&& tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount != 0)
+            if (tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount>= 4 && tiles[i].GetComponent<Tile>().blockColor == 5&& tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount != 0)
             {
                 isSwapping = true;
                 StartCoroutine(StunBlock(tiles[i].transform,createStun,i));
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount = 0;
             }
         }
     }
