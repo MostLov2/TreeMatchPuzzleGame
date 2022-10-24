@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.EventSystems;
 
 public class Tile : MonoBehaviour
@@ -9,5 +10,4 @@ public class Tile : MonoBehaviour
     public bool isEmpty;
     public int blockColor;
     public Vector2 pos;
-
 }

@@ -96,9 +96,9 @@ public class TileManager : MonoBehaviour
         treeLevel = GameLogicManager.treeLevel;
         stickSkillLevel = MySqlSystem.dragonflyStickLevelPoint;
         spraySkillLevel = MySqlSystem.sprayLevelPoint;
-        treeLevel = 50;
+/*        treeLevel = 50;
         spraySkillLevel = 5;
-        stickSkillLevel = 5;
+        stickSkillLevel = 5;*/
         createTiles = GameObject.FindGameObjectWithTag("CreateTile").transform;
         ctiles = createTiles.GetComponentsInChildren<Transform>();
         createTile = new GameObject[8];
@@ -495,6 +495,9 @@ public class TileManager : MonoBehaviour
                     destroyBlock.Add(arrayRow.tilesY[6].tilesScriptX[i].block.gameObject);
                     destroyBlock.Add(arrayRow.tilesY[6].tilesScriptX[i + 1].block.gameObject);
                     destroyBlock.Add(arrayRow.tilesY[6].tilesScriptX[i + 2].block.gameObject);
+                    destroyTile.Add(arrayRow.tilesY[6].tilesScriptX[i]);
+                    destroyTile.Add(arrayRow.tilesY[6].tilesScriptX[i + 1]);
+                    destroyTile.Add(arrayRow.tilesY[6].tilesScriptX[i + 2]);
                 }
             }
             if (arrayRow.tilesY[7].tilesScriptX[i].blockColor == arrayRow.tilesY[7].tilesScriptX[i + 1].blockColor && arrayRow.tilesY[7].tilesScriptX[i].blockColor == arrayRow.tilesY[7].tilesScriptX[i + 2].blockColor)
@@ -2875,7 +2878,6 @@ public class TileManager : MonoBehaviour
     }
     IEnumerator CreateEagleEffect(Tile tile,bool XorY)
     {
-        isSwapping = true;
         for (int i = 0; i < tiles.Length; i++)
         {
             if(tiles[i].GetComponent<Tile>().pos.x == tile.pos.x && XorY)
@@ -2915,11 +2917,9 @@ public class TileManager : MonoBehaviour
         eagleEffect.transform.DOMove(lastTile.transform.position, 0.25f);
         yield return new WaitForSeconds(0.25f);
         eagleEffect.gameObject.SetActive(false);
-        isSwapping = false;
     }
     IEnumerator UseEagleItem(Tile target, Tile SwappingTarget)
     {
-        isSwapping = true;
         yield return new WaitForSeconds(0.40f);
         useItem = true;
         if (target.blockColor == 14 && SwappingTarget.blockColor == 14)
@@ -3355,7 +3355,6 @@ public class TileManager : MonoBehaviour
     }
     IEnumerator UseStickItem(Tile target, Tile SwappingTarget)
     {
-        isSwapping = true;
         yield return new WaitForSeconds(0.40f);
         useItem = true;
         if (target.blockColor == 12&& SwappingTarget.blockColor == 12)
@@ -3380,7 +3379,6 @@ public class TileManager : MonoBehaviour
     }
     IEnumerator UseSpray(Tile target,Tile SwappingTarget)
     {
-        isSwapping = true;
         yield return new WaitForSeconds(0.40f);
         useItem = true;
         if (target.blockColor == 13 && SwappingTarget.block.GetComponent<Block>().blocktype == Block.BlockType.ITEM)
@@ -3502,4 +3500,3 @@ public class TileManager : MonoBehaviour
         }
     }
 }
- 

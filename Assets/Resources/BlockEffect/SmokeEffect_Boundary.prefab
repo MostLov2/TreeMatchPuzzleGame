@@ -4793,7 +4793,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4844,7 +4844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8363800564376577421
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5147,7 +5147,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5725982137666112525, guid: 9192321c03f21f74b84be1a4e407f686, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5725982137666112525, guid: 9192321c03f21f74b84be1a4e407f686, type: 3}
       propertyPath: m_Materials.Array.size
@@ -5285,7 +5285,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5725982137666112525, guid: 9192321c03f21f74b84be1a4e407f686, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5725982137666112525, guid: 9192321c03f21f74b84be1a4e407f686, type: 3}
       propertyPath: m_Materials.Array.size
@@ -5343,7 +5343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830971932159210102, guid: 63b831b4f97a85c4c8ef21c0e459a8aa, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1830971932159210102, guid: 63b831b4f97a85c4c8ef21c0e459a8aa, type: 3}
       propertyPath: m_Materials.Array.size
@@ -5497,7 +5497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1830971932159210102, guid: 63b831b4f97a85c4c8ef21c0e459a8aa, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1830971932159210102, guid: 63b831b4f97a85c4c8ef21c0e459a8aa, type: 3}
       propertyPath: m_Materials.Array.size
@@ -5615,7 +5615,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4193045625356249328, guid: 952f678cfeba86247bdbf5b64482e287, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4193045625356249328, guid: 952f678cfeba86247bdbf5b64482e287, type: 3}
       propertyPath: m_Materials.Array.size
@@ -5733,7 +5733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5119500687856206677, guid: 1b0da264b1c4aa94097605515a0cfbc0, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6620451965893259212, guid: 1b0da264b1c4aa94097605515a0cfbc0, type: 3}
       propertyPath: looping
@@ -5863,7 +5863,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5119500687856206677, guid: 1b0da264b1c4aa94097605515a0cfbc0, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6620451965893259212, guid: 1b0da264b1c4aa94097605515a0cfbc0, type: 3}
       propertyPath: looping
@@ -6093,7 +6093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19951694, guid: 6fed2eb6a9e2f5e4892b57ce34fbee4b, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 19951694, guid: 6fed2eb6a9e2f5e4892b57ce34fbee4b, type: 3}
       propertyPath: m_Materials.Array.size
