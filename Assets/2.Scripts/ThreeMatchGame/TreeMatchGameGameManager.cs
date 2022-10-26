@@ -64,6 +64,10 @@ public class TreeMatchGameGameManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 램덤한 엔딩 애니메이션 재생 함수
+    /// </summary>
+    /// <returns></returns>
     IEnumerator GameOverEffectOff()
     {
         int randomNum = Random.Range(0, 2);
@@ -87,6 +91,10 @@ public class TreeMatchGameGameManager : MonoBehaviour
             GameOverEffect1.gameObject.SetActive(false);
         }
     }
+    /// <summary>
+    /// 게임의 밸런스를 DB에서 가져오는 함수
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator TreeMatchPuzzleBalance()
     {
         WWWForm www = new WWWForm();

@@ -31,6 +31,7 @@ public class tileColumnArrayX
 
 public class TileManager : MonoBehaviour
 {
+    public int comboCount = 0;
     public GameObject targetTile;
     public Vector3 MousePos;
     public GameObject tempBlock;
@@ -96,9 +97,9 @@ public class TileManager : MonoBehaviour
         treeLevel = GameLogicManager.treeLevel;
         stickSkillLevel = MySqlSystem.dragonflyStickLevelPoint;
         spraySkillLevel = MySqlSystem.sprayLevelPoint;
-/*        treeLevel = 50;
+        treeLevel = 50;
         spraySkillLevel = 5;
-        stickSkillLevel = 5;*/
+        stickSkillLevel = 5;
         createTiles = GameObject.FindGameObjectWithTag("CreateTile").transform;
         ctiles = createTiles.GetComponentsInChildren<Transform>();
         createTile = new GameObject[8];
@@ -362,6 +363,7 @@ public class TileManager : MonoBehaviour
         destroyBlock.Clear();
         if (CountDownInPuzzle.isGameStart)
         {
+            
             StartCoroutine(CreateSpray());
             StartCoroutine(CreateStick());
             for (int i = 0; i < destroyBlock.Count; i++)
@@ -680,9 +682,33 @@ public class TileManager : MonoBehaviour
             }
         }
         destroyTile.Clear();
+        if(isHaveDestroyBlock != 0&&CountDownInPuzzle.isGameStart)
+        {
+            comboCount++;
+            Debug.Log(comboCount);
+            if (comboCount >= 6)
+            {
+                ComboSystem.instance.ComboTextUp();
+                TreeMatchGameGameManager.TimeCount += 3;
+                Debug.Log("did");
+            }
+            else if (comboCount >= 4)
+            {
+                ComboSystem.instance.ComboTextUp();
+                TreeMatchGameGameManager.TimeCount += 2;
+                Debug.Log("did1");
+            }
+            else if (comboCount >= 2)
+            {
+                ComboSystem.instance.ComboTextUp();
+                TreeMatchGameGameManager.TimeCount += 1;
+                Debug.Log("did2");
+            }
+        }
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(DamgeToBlock());
     }
+    
     /// <summary>
     /// 사라지는 블록 연출 함수
     /// </summary>
@@ -704,6 +730,7 @@ public class TileManager : MonoBehaviour
         {
             if (CountDownInPuzzle.isGameStart)
             {
+                comboCount = 0;
                 for (int i = 0; i < tiles.Length; i++)
                 {
                     if (tiles[i].GetComponent<Tile>().block != null)
@@ -1696,10 +1723,12 @@ public class TileManager : MonoBehaviour
     {
         if(target.blockColor ==14||SwappingTarget.blockColor == 14)
         {
+            comboCount++;
             StartCoroutine(UseEagleItem(target, SwappingTarget));
         }
         else if (target.blockColor == 13 || SwappingTarget.blockColor == 13)
         {
+            comboCount++;
             StartCoroutine(UseSpray(target, SwappingTarget));
         }
         else if (target.blockColor == 12 || SwappingTarget.blockColor == 12)
@@ -1732,7 +1761,7 @@ public class TileManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// 턴이 
+    /// 4턴이 지나면 벌이 공격하게 하는 함수
     /// </summary>
     void BeeBlockAttack()
     {
@@ -1747,6 +1776,13 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 벌공격시 블록에 기절 이펙트와 벌침이 날아가는 이펙트 생성 함수
+    /// </summary>
+    /// <param name="beePos"></param>
+    /// <param name="createStun"></param>
+    /// <param name="tileNum"></param>
+    /// <returns></returns>
     IEnumerator StunBlock(Transform beePos, bool createStun,int tileNum)
     {
         isSwapping = true;
@@ -1783,6 +1819,9 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 기절한 블록의 리스트를 초기화
+    /// </summary>
     void StunListSet()
     {
         for (int i = 0; i < stunEffect.Count; i++)
@@ -1793,6 +1832,10 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 4턴이 지나면 토끼가 램덤한 블록을 방해하게 하는 함수
+    /// </summary>
+    /// <returns></returns>
     IEnumerator RabbitAttack()
     {
         int randomNum = 0;
@@ -1830,6 +1873,10 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 랜덤한 블록을 지정해주는 함수
+    /// </summary>
+    /// <returns></returns>
     int RandomRabbitAttack()
     {
         int returnNum = 0;
@@ -1844,11 +1891,19 @@ public class TileManager : MonoBehaviour
         }
         return returnNum;
     }
+    /// <summary>
+    /// 이펙트 사운드를 발생하는 함수
+    /// </summary>
+    /// <returns></returns>
     IEnumerator EffectSoundMaker()
     {
         yield return new WaitForSeconds(1f);
         SoundManager.instance.PlaySFX(clip, 2, -30f, 1);
     }
+    /// <summary>
+    /// 잠자리채 아이템을 생성하는 함수
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CreateStick()
     {
         yield return new WaitForSeconds(0.1f);
@@ -1924,6 +1979,10 @@ public class TileManager : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
     }
+    /// <summary>
+    /// 스프레이 아이템을 생성하는 함수
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CreateSpray()
     {
         yield return new WaitForSeconds(0.1f);
@@ -2892,6 +2951,12 @@ public class TileManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
     }
+    /// <summary>
+    /// 호루라기 아이템을 사용할 때 나오는 독수리 이펙트 생성
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <param name="XorY"></param>
+    /// <returns></returns>
     IEnumerator CreateEagleEffect(Tile tile,bool XorY)
     {
         for (int i = 0; i < tiles.Length; i++)
@@ -2934,6 +2999,12 @@ public class TileManager : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         eagleEffect.gameObject.SetActive(false);
     }
+    /// <summary>
+    /// 독수리 아이템을 사용했을 때 아이템 효과
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="SwappingTarget"></param>
+    /// <returns></returns>
     IEnumerator UseEagleItem(Tile target, Tile SwappingTarget)
     {
         yield return new WaitForSeconds(0.40f);
@@ -3152,6 +3223,11 @@ public class TileManager : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         StartCoroutine(PullDownBlock());
     }
+    /// <summary>
+    /// 폭탄 아이템 사용효과
+    /// </summary>
+    /// <param name="vector2"></param>
+    /// <returns></returns>
     IEnumerator BoomItem(Vector2 vector2)
     {
         Debug.Log(vector2);
@@ -3369,6 +3445,12 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 잠자리채 아이템 사용효과
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="SwappingTarget"></param>
+    /// <returns></returns>
     IEnumerator UseStickItem(Tile target, Tile SwappingTarget)
     {
         yield return new WaitForSeconds(0.40f);
@@ -3393,6 +3475,12 @@ public class TileManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         StartCoroutine(PullDownBlock());
     }
+    /// <summary>
+    /// 스프레이 아이템 사용 효과
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="SwappingTarget"></param>
+    /// <returns></returns>
     IEnumerator UseSpray(Tile target,Tile SwappingTarget)
     {
         yield return new WaitForSeconds(0.40f);
@@ -3457,6 +3545,11 @@ public class TileManager : MonoBehaviour
         #endregion
         SprayDestroyBlock(spraySkillLevel, sprayEffect);
     }
+    /// <summary>
+    /// 스프레이 사용시 블록이 없어지는 함수
+    /// </summary>
+    /// <param name="spraySkillLevel"></param>
+    /// <param name="sprayEffect"></param>
     void SprayDestroyBlock(int spraySkillLevel, GameObject sprayEffect)
     {
         if (spraySkillLevel <= 4)
@@ -3497,6 +3590,10 @@ public class TileManager : MonoBehaviour
 
         
     }
+    /// <summary>
+    /// 겹치는 숫자가 없이 숫자를 배치해주는 함수
+    /// </summary>
+    /// <param name="max"></param>
     void RandomNumNotDouble(int max)
     {
         notDouble.Clear();
@@ -3506,6 +3603,9 @@ public class TileManager : MonoBehaviour
             notDouble.Add(randomNum);
         }
     }
+    /// <summary>
+    /// 모든 블록을 없애는 함수
+    /// </summary>
     void ClearAllBlock()
     {
         for (int i = 0; i < tiles.Length; i++)

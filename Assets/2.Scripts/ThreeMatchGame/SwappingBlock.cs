@@ -12,21 +12,21 @@ public class SwappingBlock : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
     {
         SwapTarget();
     }
-
+    /// <summary>
+    /// 포인터 클릭시 타켓 블록과 위치값을 저장하는 함수 
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerUp(PointerEventData eventData)
     {
-        //Debug.Log(TileManager.instance.targetTile.GetComponent<Tile>().block.GetComponent<Block>().blocktype);
         if (TileManager.instance.targetTile.GetComponent<Tile>().block.GetComponent<Block>().blocktype ==Block.BlockType.CHESTNUTBLOCK|| TileManager.instance.targetTile.GetComponent<Tile>().block.GetComponent<Block>().blocktype == Block.BlockType.ITEM|| TileManager.instance.targetTile.GetComponent<Tile>().block != null)
         {
             if (TileManager.instance.targetTile.GetComponent<Tile>().block.GetComponent<Block>().blocktype != Block.BlockType.MONSTER)
             {
-                // Debug.Log("Didn't0");
                 if (!TileManager.instance.isSwapping)
                 {
                     mousePos = Input.mousePosition;
                     mousePos = Camera.main.ScreenToWorldPoint(mousePos);
                     TileManager.instance.MousePos = mousePos;
-                    //Debug.Log("Didn't");
                     TileManager.instance.SwappingBlock();
                 }
             }

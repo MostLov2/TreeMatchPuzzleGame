@@ -211,6 +211,10 @@ public class Block : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 블록이 사라졌을 때 나오는 이펙트 함수
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CreateDeadEffect(int effectNum,GameObject effect)
     {
         
@@ -287,6 +291,10 @@ public class Block : MonoBehaviour
         
         
     }
+    /// <summary>
+    /// 밤블록이 사라졌을때 나무의 레벨값에 따라 밤의 획득 정도를 설정하는 함수
+    /// </summary>
+    /// <returns></returns>
     int ChestnutPointInTreeMatchPuzzle()
     {
         int MinChestPoint = 0;
@@ -324,6 +332,10 @@ public class Block : MonoBehaviour
         int RandomChestPoint = Random.Range(MinChestPoint+TreeMatchGameGameManager.instance.chestPointMin,MaxChestPoint+ TreeMatchGameGameManager.instance.chestPointMax);
         return RandomChestPoint;
     }
+    /// <summary>
+    /// 몬스터 블록이 사라졌을때 나무의 레벨값에 따라 비료의 획득 정도를 설정하는 함수
+    /// </summary>
+    /// <returns></returns>
     int FertilizerPointInTreeMatchPuzzle()
     {
         int minFertilizer = 0;

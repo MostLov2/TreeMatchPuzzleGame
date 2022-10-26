@@ -82,7 +82,7 @@ public class BlockEffectOPManager : MonoBehaviour
         chestnutEffectP = Resources.Load<GameObject>("BlockEffect/ChestnutEffect");
         fertilizerEffectP = Resources.Load<GameObject>("BlockEffect/FertilizerEffect");
         eagleEffectP = Resources.Load<GameObject>("BlockEffect/BirdEffect");
-        stickEffectP = Resources.Load<GameObject>("BlockEffect/BoomEffect");
+        stickEffectP = Resources.Load<GameObject>("BlockEffect/BoomEffect/BoomEffect");
         sprayEffectP = Resources.Load<GameObject>("BlockEffect/SprayShot");
 
         redBlockEffect = new GameObject[100];
