@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using Unity.VisualScripting;
 using System.Linq;
 using System.Web.Razor.Parser.SyntaxTree;
+using Cysharp.Threading.Tasks.Triggers;
+using UnityEditor.Rendering;
 
 [System.Serializable]
 public class tileRowArrayX
@@ -79,6 +81,7 @@ public class TileManager : MonoBehaviour
     public List<GameObject> line6 = new List<GameObject>();
     public List<GameObject> line7 = new List<GameObject>();
     public List<GameObject> destroyBlock = new List<GameObject>();
+    public bool nopeSwap = false;
     List<int> destroyBlockC = new List<int>();
     List<bool> destroyBlockB = new List<bool>();
     public int isHaveDestroyBlock  = 0;
@@ -739,18 +742,21 @@ public class TileManager : MonoBehaviour
                         hpUp = true;
                     }
                 }
-                for (int i = 0; i < mudEffects.Count; i++)
-                {
-                    mudEffects[i].GetComponent<MudEffect>().SwapCount++;
-                }
-                for (int i = 0; i < squirrelSkills.Count; i++)
-                {
-                    squirrelSkills[i].GetComponent<SquirrelEffect>().SwapCount++;
-                }
-                for (int i = 0; i < stunEffect.Count; i++)
-                {
-                    stunEffect[i].GetComponent<StunEffect>().SwapCount++;
+                if (!nopeSwap)
+                { 
+                    for (int i = 0; i < mudEffects.Count; i++)
+                    {
+                        mudEffects[i].GetComponent<MudEffect>().SwapCount++;
+                    }
+                    for (int i = 0; i < squirrelSkills.Count; i++)
+                    {
+                        squirrelSkills[i].GetComponent<SquirrelEffect>().SwapCount++;
+                    }
+                    for (int i = 0; i < stunEffect.Count; i++)
+                    {
+                        stunEffect[i].GetComponent<StunEffect>().SwapCount++;
 
+                    }
                 }
             }
         }
@@ -1244,7 +1250,13 @@ public class TileManager : MonoBehaviour
             MudEffectOff();
             WevvilMakeEffect();
             SquirrelAttack();
-            StartCoroutine(SquirrelEffectOff());
+            for (int i = 0; i < squirrelSkills.Count; i++)
+            {
+                if (squirrelSkills[0].GetComponent<SquirrelEffect>().SwapCount >= 2)
+                {
+                    StartCoroutine(SquirrelEffectOff());
+                }
+            }
             EggtoWorm();
             BeeBlockAttack();
             WormtoWevvil();
@@ -1316,6 +1328,7 @@ public class TileManager : MonoBehaviour
             isSwapping = true;
             if (targetTile.transform.position.x - MousePos.x > 0.5f && targetTile.transform.position.x - MousePos.x > targetTile.transform.position.y - MousePos.y)
             {
+                nopeSwap = false;
                 for (int y = 0; y < 9; y++)
                 {
                     for (int x = 0; x < 7; x++)
@@ -1346,6 +1359,7 @@ public class TileManager : MonoBehaviour
             }
             else if (targetTile.transform.position.x - MousePos.x < -0.5f && targetTile.transform.position.x - MousePos.x < targetTile.transform.position.y - MousePos.y)
             {
+                nopeSwap = false;
                 for (int y = 0; y < 9; y++)
                 {
                     for (int x = 1; x < 8; x++)
@@ -1376,6 +1390,7 @@ public class TileManager : MonoBehaviour
             }
             else if (targetTile.transform.position.y - MousePos.y > 0.5f && targetTile.transform.position.x - MousePos.x < targetTile.transform.position.y - MousePos.y)
             {
+                nopeSwap = false;
                 for (int x = 0; x < 8; x++)
                 {
                     for (int y = 1; y < 9; y++)
@@ -1405,6 +1420,7 @@ public class TileManager : MonoBehaviour
             }
             else if (targetTile.transform.position.y - MousePos.y < -0.5f && targetTile.transform.position.x - MousePos.x > targetTile.transform.position.y - MousePos.y)
             {
+                nopeSwap = false;
                 for (int x = 0; x < 8; x++)
                 {
                     for (int y = 0; y < 8; y++)
@@ -1436,18 +1452,15 @@ public class TileManager : MonoBehaviour
             }
             else
             {
+                nopeSwap = true;
                 isSwapping = false;
                 if (targetTile.GetComponent<Tile>().blockColor == 12)
                 {
-                    StartCoroutine(UseStickItem(targetTile.GetComponent<Tile>(), targetTile.GetComponent<Tile>()));
-                }
-                else if (targetTile.GetComponent<Tile>().blockColor == 13)
-                {
-                    StartCoroutine(UseSpray(targetTile.GetComponent<Tile>(), targetTile.GetComponent<Tile>()));
+                    StartCoroutine(UseStickItem(targetTile.GetComponent<Tile>()));
                 }
                 else if (targetTile.GetComponent<Tile>().blockColor == 14)
                 {
-                    StartCoroutine(UseEagleItem(targetTile.GetComponent<Tile>(), targetTile.GetComponent<Tile>()));
+                    StartCoroutine(UseEagleItem(targetTile.GetComponent<Tile>()));
                 }
                 return;
             }
@@ -1557,7 +1570,6 @@ public class TileManager : MonoBehaviour
     /// </summary>
     public void WevvilMakeEffect()
     {
-        
         for (int i = 0; i < tiles.Length; i++)
         {
             if (tiles[i].GetComponent<Tile>().block!= null&& tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount>=3 && tiles[i].GetComponent<Tile>().blockColor == 10&& tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount!=0)
@@ -1575,12 +1587,10 @@ public class TileManager : MonoBehaviour
     /// </summary>
     public void SquirrelAttack()
     {
-        
         for (int i = 0; i < tiles.Length; i++)
         {
             if (tiles[i].GetComponent<Tile>().block != null && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount >= 4 && tiles[i].GetComponent<Tile>().blockColor == 9 && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount != 0)
             {
-                squirrelSkills.Clear();
                 GameObject squirrelSkill = BlockEffectOPManager.instance.SetObject(10);
                 skillPoint = new Vector2(0, tiles[i].GetComponent<Tile>().transform.position.y);
                 squirrelSkill.transform.position = skillPoint;
@@ -1640,8 +1650,10 @@ public class TileManager : MonoBehaviour
             {
                 mudEffects[i].gameObject.SetActive(false);
                 mudEffects[i].GetComponent<MudEffect>().SwapCount = 0;
+                mudEffects.Remove(mudEffects[i].gameObject);
             }
         }
+
     }
     /// <summary>
     /// 벌이 공격시 스턴 이펙트 출력 및 블록 사용 불가능 하게 변경
@@ -1685,8 +1697,10 @@ public class TileManager : MonoBehaviour
             {
                 stunEffect[i].gameObject.SetActive(false);
                 stunEffect[i].GetComponent<StunEffect>().SwapCount = 0;
+                stunEffect.Remove(stunEffect[i].gameObject);
             }
         }
+        
     }
     /// <summary>
     /// 다람쥐가 사용한 스킬 2턴이후에 사라지게 하는 함수
@@ -1710,6 +1724,7 @@ public class TileManager : MonoBehaviour
             {
                 squirrelSkills[i].gameObject.SetActive(false);
                 squirrelSkills[i].GetComponent<SquirrelEffect>().SwapCount = 0;
+                squirrelSkills.Clear();
             }
         }
     }
@@ -3223,6 +3238,79 @@ public class TileManager : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         StartCoroutine(PullDownBlock());
     }
+    IEnumerator UseEagleItem(Tile target)
+    {
+        
+        yield return new WaitForSeconds(0.40f);
+        useItem = true;
+        for (int y = 0; y < tiles.Length; y++)
+        {
+            if (tiles[y].GetComponent<Tile>().pos.y == target.pos.y)
+            {
+                if (tiles[y].GetComponent<Tile>().blockColor == 14)
+                {
+                    if (tiles[y].GetComponent<Tile>().pos != target.pos)
+                    {
+                        for (int x = 0; x < tiles.Length; x++)
+                        {
+                            if (tiles[x].GetComponent<Tile>().pos.x == tiles[y].GetComponent<Tile>().pos.x)
+                            {
+                                if (tiles[x].GetComponent<Tile>().blockColor == 14)
+                                {
+                                    tiles[x].GetComponent<Tile>().isEmpty = true;
+                                    tiles[x].GetComponent<Tile>().block.gameObject.SetActive(false);
+                                    tiles[x].GetComponent<Tile>().block = null;
+                                    if (tiles[x].GetComponent<Tile>().pos.y == 0)
+                                    {
+                                        isSwapping = true;
+                                        StartCoroutine(CreateEagleEffect(tiles[y].GetComponent<Tile>(), false));
+                                    }
+                                }
+                                else
+                                {
+                                    tiles[x].GetComponent<Tile>().isEmpty = true;
+                                    tiles[x].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                                    tiles[x].GetComponent<Tile>().block.gameObject.SetActive(false);
+                                    tiles[x].GetComponent<Tile>().block = null;
+                                    if (tiles[x].GetComponent<Tile>().pos.y == 0)
+                                    {
+                                        isSwapping = true;
+                                        StartCoroutine(CreateEagleEffect(tiles[y].GetComponent<Tile>(), false));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        tiles[y].GetComponent<Tile>().isEmpty = true;
+                        tiles[y].GetComponent<Tile>().block.gameObject.SetActive(false);
+                        tiles[y].GetComponent<Tile>().block = null;
+                        if (tiles[y].GetComponent<Tile>().pos.x == 0)
+                        {
+                            isSwapping = true;
+                            StartCoroutine(CreateEagleEffect(tiles[y].GetComponent<Tile>(), true));
+                        }
+                    }
+                }
+                else
+                {
+                    tiles[y].GetComponent<Tile>().isEmpty = true;
+                    tiles[y].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                    tiles[y].GetComponent<Tile>().block.gameObject.SetActive(false);
+                    tiles[y].GetComponent<Tile>().block = null;
+                    if (tiles[y].GetComponent<Tile>().pos.x == 0)
+                    {
+                        isSwapping = true;
+                        StartCoroutine(CreateEagleEffect(tiles[y].GetComponent<Tile>(), false));
+                    }
+                }
+            }
+        }
+        
+        yield return new WaitForSeconds(0.3f);
+        StartCoroutine(PullDownBlock());
+    }
     /// <summary>
     /// 폭탄 아이템 사용효과
     /// </summary>
@@ -3235,7 +3323,6 @@ public class TileManager : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         for (int i = 0; i < tiles.Length; i++)
         {   
-            //WeaponLevel0
             if (tiles[i].GetComponent<Tile>().pos == vector2)
             {
                 GameObject effect = BlockEffectOPManager.instance.SetObject(21);
@@ -3246,107 +3333,8 @@ public class TileManager : MonoBehaviour
                 tiles[i].GetComponent<Tile>().block = null;
                 tiles[i].GetComponent<Tile>().isEmpty = true;
             }
-            //WeaponLevel10
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(0, -1) && stickSkillLevel >= 1)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(0, 1) && stickSkillLevel >= 1)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(1, 0) && stickSkillLevel >= 1)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, 0) && stickSkillLevel >= 1)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            //WeaponLevel20
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, -1) && stickSkillLevel >= 2)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, 1) && stickSkillLevel >= 2)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
+            //UPRIGHT
             if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(1, 1) && stickSkillLevel >= 2)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(1, -1) && stickSkillLevel >= 2)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            //WeaponLevel30
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, 0) && stickSkillLevel >= 3)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(2, 0) && stickSkillLevel >= 3)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(0, 2) && stickSkillLevel >= 3)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(0, -2) && stickSkillLevel >= 3)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            //WeaponLevel40
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, 2) && stickSkillLevel >= 4)
             {
                 tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
                 tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
@@ -3362,48 +3350,7 @@ public class TileManager : MonoBehaviour
                 tiles[i].GetComponent<Tile>().block = null;
                 tiles[i].GetComponent<Tile>().isEmpty = true;
             }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(1, -2) && stickSkillLevel >= 4)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, -2) && stickSkillLevel >= 4)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            //WeaponLevel5
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, 2) && stickSkillLevel >= 5)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, 1) && stickSkillLevel >= 5)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, -2) && stickSkillLevel >= 5)
-            {
-                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
-                tiles[i].GetComponent<Tile>().blockColor = 255;
-                tiles[i].GetComponent<Tile>().block = null;
-                tiles[i].GetComponent<Tile>().isEmpty = true;
-            }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, -1) && stickSkillLevel >= 5)
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(2, 1) && stickSkillLevel >= 5)
             {
                 tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
                 tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
@@ -3419,7 +3366,66 @@ public class TileManager : MonoBehaviour
                 tiles[i].GetComponent<Tile>().block = null;
                 tiles[i].GetComponent<Tile>().isEmpty = true;
             }
-            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(2, 1) && stickSkillLevel >= 5)
+            //UPLEFT
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, 1) && stickSkillLevel >= 2)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, 2) && stickSkillLevel >= 4)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, 1) && stickSkillLevel >= 5)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, 2) && stickSkillLevel >= 5)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            //UP
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(0, 1) && stickSkillLevel >= 1)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(0, 2) && stickSkillLevel >= 3)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            //DOWNRIGHT
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(1, -1) && stickSkillLevel >= 2)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(1, -2) && stickSkillLevel >= 4)
             {
                 tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
                 tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
@@ -3443,6 +3449,91 @@ public class TileManager : MonoBehaviour
                 tiles[i].GetComponent<Tile>().block = null;
                 tiles[i].GetComponent<Tile>().isEmpty = true;
             }
+            //DOWMLEFT
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, -1) && stickSkillLevel >= 2)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, -2) && stickSkillLevel >= 4)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, -1) && stickSkillLevel >= 5)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, -2) && stickSkillLevel >= 5)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            //DOWN
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(0, -1) && stickSkillLevel >= 1)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(0, -2) && stickSkillLevel >= 3)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            //RIGHT
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(1, 0) && stickSkillLevel >= 1)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(2, 0) && stickSkillLevel >= 3)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            //LEFT
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-1, 0) && stickSkillLevel >= 1)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+            if (tiles[i].GetComponent<Tile>().pos == vector2 + new Vector2(-2, 0) && stickSkillLevel >= 3)
+            {
+                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                tiles[i].GetComponent<Tile>().block.gameObject.SetActive(false);
+                tiles[i].GetComponent<Tile>().blockColor = 255;
+                tiles[i].GetComponent<Tile>().block = null;
+                tiles[i].GetComponent<Tile>().isEmpty = true;
+            }
+
         }
     }
     /// <summary>
@@ -3472,7 +3563,15 @@ public class TileManager : MonoBehaviour
         {
             StartCoroutine(BoomItem(target.pos));
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(PullDownBlock());
+    }
+    IEnumerator UseStickItem(Tile target)
+    {
+        yield return new WaitForSeconds(0.40f);
+        useItem = true;
+        StartCoroutine(BoomItem(target.pos));
+        yield return new WaitForSeconds(1f);
         StartCoroutine(PullDownBlock());
     }
     /// <summary>

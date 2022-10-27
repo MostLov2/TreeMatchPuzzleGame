@@ -54,8 +54,11 @@ public class TreeMatchPuzzelGameUIManager : MonoBehaviour
     }
     public void SettingPanelOn()
     {
-        settingPanel.gameObject.SetActive(true);
-        CountDownInPuzzle.isGameStart = false;
+        if (CountDownInPuzzle.isGameStart)
+        {
+            settingPanel.gameObject.SetActive(true);
+            CountDownInPuzzle.isGameStart = false;
+        }
     }
     public void SettingPanelOff()
     {
