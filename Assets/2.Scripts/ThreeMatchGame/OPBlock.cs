@@ -19,6 +19,7 @@ public class OPBlock : MonoBehaviour
     GameObject stickBlockP;
     GameObject sprayBlockP;
     GameObject eagleBlockP;
+    GameObject firecrackerP;
 
     GameObject[] redBlock;
     GameObject[] yellowBlock;
@@ -35,6 +36,7 @@ public class OPBlock : MonoBehaviour
     GameObject[] stickBlock;
     GameObject[] sprayBlock;
     GameObject[] eagleBlock;
+    GameObject[] firecracker;
 
     GameObject[] targetPool;
     public static OPBlock instance;
@@ -59,6 +61,7 @@ public class OPBlock : MonoBehaviour
         stickBlockP = Resources.Load<GameObject>("ItemBlockScript/DragonflyStickItemBlock");
         sprayBlockP = Resources.Load<GameObject>("ItemBlockScript/SprayItemBlock");
         eagleBlockP = Resources.Load<GameObject>("ItemBlockScript/EagleItemBlock");
+        firecrackerP = Resources.Load<GameObject>("ItemBlockScript/FirecrackerBlock");
 
         redBlock = new GameObject[100];
         yellowBlock = new GameObject[100];
@@ -75,6 +78,7 @@ public class OPBlock : MonoBehaviour
         stickBlock = new GameObject[10];
         sprayBlock = new GameObject[10];
         eagleBlock = new GameObject[10];
+        firecracker = new GameObject[10];
         GetObject();
     }
     void GetObject()
@@ -184,9 +188,16 @@ public class OPBlock : MonoBehaviour
             eagleBlock[i].transform.localScale = Vector3.one;
             eagleBlock[i].SetActive(false);
         }
+        for (int i = 0; i < firecracker.Length; i++)
+        {
+            firecracker[i] = Instantiate<GameObject>(firecrackerP);
+            firecracker[i].transform.SetParent(transform);
+            firecracker[i].transform.localScale = Vector3.one;
+            firecracker[i].SetActive(false);
+        }
     }
     /// <summary>
-    /// 0 redBlock 1 yellowBlock 2 GreenBlock 3 BlueBlock 4 purpleBlock 5 beeBlock 6 beeHiveBlock 7 eggBlock 8 rabbitBlock 9 squirrelBLock 10 wevvilBlock 11 wormBlock 12 stickBlock 13 sprayBlock 14 eagleBlock
+    /// 0 redBlock 1 yellowBlock 2 GreenBlock 3 BlueBlock 4 purpleBlock 5 beeBlock 6 beeHiveBlock 7 eggBlock 8 rabbitBlock 9 squirrelBLock 10 wevvilBlock 11 wormBlock 12 stickBlock 13 sprayBlock 14 eagleBlock 15 firecrackerBlock
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -238,6 +249,9 @@ public class OPBlock : MonoBehaviour
                 break;
             case 14:
                 targetPool = eagleBlock;
+                break;
+            case 15:
+                targetPool = firecracker;
                 break;
             default:
                 break;
