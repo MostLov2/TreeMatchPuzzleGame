@@ -40,7 +40,7 @@ public class SprayShot : MonoBehaviour
                 br.material.SetColor("_EmissionColor", beamAddColor);
             }
 
-            StartCoroutine(BeamSpraying()); // 배열의 목표들마다 연속해서 쏘도록 코루틴 실행
+            StartCoroutine(BeamSpraying()); // 배열의 목표0들마다 연속해서 쏘도록 코루틴 실행
         }
     }
 
@@ -62,6 +62,7 @@ public class SprayShot : MonoBehaviour
             targets[i].GetComponent<Tile>().block = null; // 맞은 타겟을 지운다.
             
             yield return new WaitForSeconds(0.1f);  // 다음 발사까지 시간
+            //targets.Remove(targets[i]);
         }
         targets.Clear();
         gameObject.SetActive(false);

@@ -29,18 +29,18 @@ public class TreeMatchPuzzelGameUIManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        settingPanel = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).GetComponent<Transform>();
-        GameOverPanel = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(1).GetComponent<Transform>();
-        gameOverPanelChestnutPoint = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(1).GetChild(0).GetChild(0).GetChild(1).GetComponent<Text>();
-        gameOverPanelFertilizerPoint = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(1).GetChild(0).GetChild(0).GetChild(2).GetComponent<Text>();
-        SettingPanel = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).GetComponent<Transform>();
-        bgmButtonOn = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).transform.GetChild(4).GetComponent<Button>();
-        bgmButtonOff = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).transform.GetChild(3).GetComponent<Button>();
-        effectButtonOn = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).transform.GetChild(4).GetComponent<Button>();
-        effectButtonOff = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).transform.GetChild(3).GetComponent<Button>();
-        BGMS = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>();
-        EffectS = GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).GetComponent<Slider>();
-        eagleGaugeImage = GameObject.FindGameObjectWithTag("MiddleCanvas").transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Image>();
+        settingPanel =                  GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).GetComponent<Transform>();
+        GameOverPanel =                 GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(1).GetComponent<Transform>();
+        gameOverPanelChestnutPoint =    GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(1).GetChild(0).GetChild(0).GetChild(1).GetComponent<Text>();
+        gameOverPanelFertilizerPoint =  GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(1).GetChild(0).GetChild(0).GetChild(2).GetComponent<Text>();
+        SettingPanel =                  GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).GetComponent<Transform>();
+        bgmButtonOn =                   GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).transform.GetChild(4).GetComponent<Button>();
+        bgmButtonOff =                  GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).transform.GetChild(3).GetComponent<Button>();
+        effectButtonOn =                GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).transform.GetChild(4).GetComponent<Button>();
+        effectButtonOff =               GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).transform.GetChild(3).GetComponent<Button>();
+        BGMS =                          GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>();
+        EffectS =                       GameObject.FindGameObjectWithTag("HighCanvas").transform.GetChild(2).transform.GetChild(0).transform.GetChild(1).GetComponent<Slider>();
+        eagleGaugeImage =               GameObject.FindGameObjectWithTag("MiddleCanvas").transform.GetChild(1).GetChild(3).GetChild(0).GetComponent<Image>();
     }
     private void Update()
     {
@@ -56,12 +56,28 @@ public class TreeMatchPuzzelGameUIManager : MonoBehaviour
     {
         if (CountDownInPuzzle.isGameStart)
         {
+            if (ThreeMatchPuzzleFeverTime.instance.isFevertimeStart)
+            {
+                GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(0).gameObject.SetActive(false);
+                GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(1).gameObject.SetActive(false);
+                GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(2).gameObject.SetActive(false);
+                GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(3).gameObject.SetActive(false);
+                GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(4).gameObject.SetActive(false);
+            }
             settingPanel.gameObject.SetActive(true);
             CountDownInPuzzle.isGameStart = false;
         }
     }
     public void SettingPanelOff()
     {
+        if (ThreeMatchPuzzleFeverTime.instance.isFevertimeStart)
+        {
+            GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(0).gameObject.SetActive(true);
+            GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(1).gameObject.SetActive(true);
+            GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(2).gameObject.SetActive(true);
+            GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(3).gameObject.SetActive(true);
+            GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(4).gameObject.SetActive(true);
+        }
         settingPanel.gameObject.SetActive(false);
         CountDownInPuzzle.isGameStart = true;
     }
@@ -85,7 +101,7 @@ public class TreeMatchPuzzelGameUIManager : MonoBehaviour
         gameOverPanelFertilizerPoint.text = fertilizerPoint.ToString();
         MySqlSystem.chestnutPoint += chestnutPoint;
         MySqlSystem.fertilizerPoint += fertilizerPoint;
-        StartCoroutine(MySqlSystem.instance.Setchestnut(MySqlSystem.chestnutPoint));
+        StartCoroutine(MySqlSystem.instance.Setchestnut(MySqlSystem.chestnutPoint));     
         StartCoroutine(MySqlSystem.instance.SetFertilizer(MySqlSystem.fertilizerPoint));
     }
     /// <summary>

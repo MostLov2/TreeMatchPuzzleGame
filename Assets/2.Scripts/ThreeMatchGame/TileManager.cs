@@ -100,9 +100,9 @@ public class TileManager : MonoBehaviour
         treeLevel = GameLogicManager.treeLevel;
         stickSkillLevel = MySqlSystem.dragonflyStickLevelPoint;
         spraySkillLevel = MySqlSystem.sprayLevelPoint;
-        treeLevel = 50;
+/*        treeLevel = 50;
         spraySkillLevel = 5;
-        stickSkillLevel = 5;
+        stickSkillLevel = 5;*/
         createTiles = GameObject.FindGameObjectWithTag("CreateTile").transform;
         ctiles = createTiles.GetComponentsInChildren<Transform>();
         createTile = new GameObject[8];
@@ -693,19 +693,16 @@ public class TileManager : MonoBehaviour
             {
                 ComboSystem.instance.ComboTextUp();
                 TreeMatchGameGameManager.TimeCount += 3;
-                Debug.Log("did");
             }
             else if (comboCount >= 4)
             {
                 ComboSystem.instance.ComboTextUp();
                 TreeMatchGameGameManager.TimeCount += 2;
-                Debug.Log("did1");
             }
             else if (comboCount >= 2)
             {
                 ComboSystem.instance.ComboTextUp();
                 TreeMatchGameGameManager.TimeCount += 1;
-                Debug.Log("did2");
             }
         }
         yield return new WaitForSeconds(0.1f);
@@ -1238,7 +1235,7 @@ public class TileManager : MonoBehaviour
         if (isHaveDestroyBlock == 0)
         {
             
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             if (!CountDownInPuzzle.isGameStart && CountDownInPuzzle.StartCount == 0)
             {
                 StartGame = GameObject.FindGameObjectWithTag("MiddleCanvas").transform.GetChild(1).GetChild(4).GetComponent<Transform>();
@@ -3295,9 +3292,9 @@ public class TileManager : MonoBehaviour
                 }
                 else
                 {
-                    tiles[y].GetComponent<Tile>().isEmpty = true;
                     tiles[y].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
                     tiles[y].GetComponent<Tile>().block.gameObject.SetActive(false);
+                    tiles[y].GetComponent<Tile>().isEmpty = true;
                     tiles[y].GetComponent<Tile>().block = null;
                     if (tiles[y].GetComponent<Tile>().pos.x == 0)
                     {
@@ -3548,12 +3545,15 @@ public class TileManager : MonoBehaviour
         useItem = true;
         if (target.blockColor == 12&& SwappingTarget.blockColor == 12)
         {
-            StartCoroutine(BoomItem(target.pos));
-            StartCoroutine(BoomItem(SwappingTarget.pos));
+            AllDestoryBlock.Instance.DestroyAllBlock(true, true);
         }
-        else if (target.blockColor == 12 && SwappingTarget.block.GetComponent<Block>().blocktype == Block.BlockType.ITEM)
+        else if (target.blockColor == 12 && SwappingTarget.blockColor == 13)
         {
-           // ClearAllBlock();
+            AllDestoryBlock.Instance.DestroyAllBlock(true, false);
+        }
+        else if (target.blockColor == 13 && SwappingTarget.blockColor == 12)
+        {
+            AllDestoryBlock.Instance.DestroyAllBlock(false, true);
         }
         else if (target.blockColor != 12 && SwappingTarget.blockColor == 12)
         {
@@ -3563,12 +3563,12 @@ public class TileManager : MonoBehaviour
         {
             StartCoroutine(BoomItem(target.pos));
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         StartCoroutine(PullDownBlock());
     }
     IEnumerator UseStickItem(Tile target)
     {
-        yield return new WaitForSeconds(0.40f);
+        yield return new WaitForSeconds(1f);
         useItem = true;
         StartCoroutine(BoomItem(target.pos));
         yield return new WaitForSeconds(1f);
@@ -3584,9 +3584,17 @@ public class TileManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.40f);
         useItem = true;
-        if (target.blockColor == 13 && SwappingTarget.block.GetComponent<Block>().blocktype == Block.BlockType.ITEM)
+        if (target.blockColor == 13 && SwappingTarget.blockColor == 13)
         {
-           // ClearAllBlock();
+            AllDestoryBlock.Instance.DestroyAllBlock(false, false);
+        }
+        if (target.blockColor == 13 && SwappingTarget.blockColor == 12)
+        {
+            AllDestoryBlock.Instance.DestroyAllBlock(false, true);
+        }
+        if (target.blockColor == 12 && SwappingTarget.blockColor == 13)
+        {
+            AllDestoryBlock.Instance.DestroyAllBlock(true, false);
         }
         else if (target.blockColor == 13 && SwappingTarget.blockColor != 13)
         {
@@ -3596,7 +3604,7 @@ public class TileManager : MonoBehaviour
         {
             SprayItem(SwappingTarget, target);
         }
-        yield return new WaitForSeconds(notDouble.Count*0.1f+0.3f);
+        yield return new WaitForSeconds(notDouble.Count*0.1f+1f);
         StartCoroutine(PullDownBlock());
     }
     void SprayItem(Tile target, Tile swaptarget)
@@ -3642,7 +3650,7 @@ public class TileManager : MonoBehaviour
             sprayEffect.GetComponent<SprayShot>().beamAddColor = Color.magenta;
         }
         #endregion
-        SprayDestroyBlock(spraySkillLevel, sprayEffect);
+        SprayDestroyBlock(spraySkillLevel + GameLogicManager.birdMovementSpeed, sprayEffect);
     }
     /// <summary>
     /// 스프레이 사용시 블록이 없어지는 함수
@@ -3653,7 +3661,7 @@ public class TileManager : MonoBehaviour
     {
         if (spraySkillLevel <= 4)
         {
-            if (targetTiles.Count >= spraySkillLevel+1)
+            if (targetTiles.Count >= spraySkillLevel + 1)
             {
                 RandomNumNotDouble(spraySkillLevel + 1);
             }
@@ -3663,9 +3671,10 @@ public class TileManager : MonoBehaviour
             }
             foreach (var num in notDouble)
             {
+                targetTiles[num].GetComponent<Tile>().isEmpty = true;
                 sprayEffect.GetComponent<SprayShot>().targets.Add(targetTiles[num].GetComponent<Tile>().transform);
                 sprayEffect.SetActive(true);
-                targetTiles[num].GetComponent<Tile>().isEmpty = true;
+                targetTiles[num].GetComponent<Tile>().block = null;
             }
         }
         else

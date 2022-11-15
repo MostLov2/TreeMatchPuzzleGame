@@ -27,6 +27,7 @@ public class BlockEffectOPManager : MonoBehaviour
     public GameObject eagleEffectP;
     public GameObject stickEffectP;
     public GameObject sprayEffectP;
+    public GameObject popEffectP;
 
     public GameObject[] redBlockEffect;
     public GameObject[] yellowBlockEffect;
@@ -51,6 +52,7 @@ public class BlockEffectOPManager : MonoBehaviour
     public GameObject[] eagleEffect;
     public GameObject[] stickEffect;
     public GameObject[] sprayEffect;
+    public GameObject[] popEffect;
     
 
     public GameObject[] targetPool;
@@ -84,6 +86,7 @@ public class BlockEffectOPManager : MonoBehaviour
         eagleEffectP = Resources.Load<GameObject>("BlockEffect/BirdEffect");
         stickEffectP = Resources.Load<GameObject>("BlockEffect/BoomEffect/BoomEffect");
         sprayEffectP = Resources.Load<GameObject>("BlockEffect/SprayShot");
+        popEffectP = Resources.Load<GameObject>("BlockEffect/ConfettiBlastRainbow");
 
         redBlockEffect = new GameObject[100];
         yellowBlockEffect = new GameObject[100];
@@ -108,6 +111,7 @@ public class BlockEffectOPManager : MonoBehaviour
         eagleEffect = new GameObject[10];
         stickEffect = new GameObject[10];
         sprayEffect = new GameObject[10];
+        popEffect = new GameObject[30];
     }
     private void Start()
     {
@@ -278,9 +282,15 @@ public class BlockEffectOPManager : MonoBehaviour
             sprayEffect[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
             sprayEffect[i].transform.localScale = new Vector3(100,100,100);
         }
+        for (int i = 0; i < popEffect.Length; i++)
+        {
+            popEffect[i] = Instantiate<GameObject>(popEffectP, transform.position, transform.rotation);
+            popEffect[i].transform.SetParent(GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform);
+            popEffect[i].SetActive(false);
+        }
     }
     /// <summary>
-    /// 0. 빨간색 밤 1. 노랑 2. 초록3. 파랑 4. 보라 5. 진흙 6 알 죽음 7.애벌레 죽음 8. 진화 9.바구미 죽음 10. 다람쥐 이펙트 11. 몬스터 히트 12. 벌 스킬 13.벌침 스킬 14. 수리검 15.토끼 나무 이펙트 16. 나무 사라지는 이펙트 17 나무위 수리검 이펙트 18 밤 이펙트 19 비료 이펙트 20 독수리 이펙트 21.잠자리채이펙트22.스프레이이펙트
+    /// 0. 빨간색 밤 1. 노랑 2. 초록3. 파랑 4. 보라 5. 진흙 6 알 죽음 7.애벌레 죽음 8. 진화 9.바구미 죽음 10. 다람쥐 이펙트 11. 몬스터 히트 12. 벌 스킬 13.벌침 스킬 14. 수리검 15.토끼 나무 이펙트 16. 나무 사라지는 이펙트 17 나무위 수리검 이펙트 18 밤 이펙트 19 비료 이펙트 20 독수리 이펙트 21.잠자리채이펙트22.스프레이이펙트 23.팝 이팩트
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -357,7 +367,9 @@ public class BlockEffectOPManager : MonoBehaviour
             case 22:
                 targetPool = sprayEffect;
                 break;
-
+            case 23:
+                targetPool = popEffect;
+                break;
             default:
                 break;
         }
@@ -372,14 +384,5 @@ public class BlockEffectOPManager : MonoBehaviour
         return null;
     }
 
-    public void DestroyObject()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (transform.childCount != 0)
-            {
-                Destroy(transform.GetChild(i).gameObject);
-            }
-        }
-    }
+    
 }

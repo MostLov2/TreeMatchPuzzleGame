@@ -49,13 +49,7 @@ public class TreeMatchGameGameManager : MonoBehaviour
         {
             if(TimeCount <= 0)
             {
-                
-                if(GameOverCount == 0)
-                {
-                    StartCoroutine(GameOverEffectOff());
-                    GameOverCount = 1;
-                    CountDownInPuzzle.isGameStart = false;
-                }
+                StartCoroutine(GameOverCountDelay());
             }
             else
             {
@@ -64,13 +58,27 @@ public class TreeMatchGameGameManager : MonoBehaviour
             }
         }
     }
+    IEnumerator GameOverCountDelay()
+    {
+        GameObject.FindGameObjectWithTag("FeverCountCanvas").transform.GetChild(0).gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        ThreeMatchPuzzleFeverTime.instance.isFeverCountOff = true;
+        GameObject.FindGameObjectWithTag("FeverCountCanvas").transform.GetChild(0).gameObject.SetActive(false);
+        ThreeMatchPuzzleFeverTime.instance.isFevertimeStart = true;
+        GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(0).gameObject.SetActive(true);
+        GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(1).gameObject.SetActive(true);
+        GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(2).gameObject.SetActive(true);
+        GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(3).gameObject.SetActive(true);
+        GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform.GetChild(4).gameObject.SetActive(true);
+        CountDownInPuzzle.isGameStart = false;
+    }
     /// <summary>
     /// 램덤한 엔딩 애니메이션 재생 함수
     /// </summary>
     /// <returns></returns>
-    IEnumerator GameOverEffectOff()
+    public IEnumerator GameOverEffectOff()
     {
-        int randomNum = Random.Range(0, 2);
+        int randomNum = Random.Range(1, 2);
         if(randomNum == 0)
         {
             GameOverEffect.gameObject.SetActive(true);
@@ -83,7 +91,7 @@ public class TreeMatchGameGameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(5);
             GameOverEffect.gameObject.SetActive(false);
-            TreeMatchPuzzelGameUIManager.instance.SettingGameOverPanel(TreeMatchGameScoreManager.chestnutPoint, TreeMatchGameScoreManager.fertilizerPoint);
+            TreeMatchPuzzelGameUIManager.instance.SettingGameOverPanel(TreeMatchGameScoreManager.chestnutPoint+ (int)((TreeMatchGameScoreManager.chestnutPoint/100)*(10*GameLogicManager.chestnutHarvest)), TreeMatchGameScoreManager.fertilizerPoint);
         }
         else
         {
@@ -123,7 +131,7 @@ public class TreeMatchGameGameManager : MonoBehaviour
             fertilizerPointMin = treeMatchGameBalance.fer_min;
             TimeCount = 0;
             EagleGauge.eagleGauge = 0;
-            TimeCount = gameTime + (int)(TileManager.instance.treeLevel / 5) * 5; ;
+            TimeCount = gameTime + (int)(TileManager.instance.treeLevel / 5) * 5+ GameLogicManager.increaseGameTime;
         }
     }
 

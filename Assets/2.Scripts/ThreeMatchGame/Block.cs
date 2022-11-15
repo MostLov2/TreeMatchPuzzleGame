@@ -301,33 +301,87 @@ public class Block : MonoBehaviour
         int MaxChestPoint = 0;
         if(TileManager.instance.treeLevel >= 50)
         {
-            MinChestPoint = 3;
-            MaxChestPoint = 6;
+            if(GameLogicManager.doubleTheChestnutHarvest== 1)
+            {
+                MinChestPoint = (3 + (int)GameLogicManager.chestnutAppearanceRate)*2;
+                MaxChestPoint = (6 + (int)GameLogicManager.chestnutAppearanceRate)*2;
+            }
+            else
+            {
+                MinChestPoint = 3 + (int)GameLogicManager.chestnutAppearanceRate;
+                MaxChestPoint = 6 + (int)GameLogicManager.chestnutAppearanceRate;
+            }
+            
         }
         else if (TileManager.instance.treeLevel >= 40)
         {
-            MinChestPoint = 2;
-            MaxChestPoint = 5;
+            if (GameLogicManager.doubleTheChestnutHarvest == 1)
+            {
+                MinChestPoint = (2 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+                MaxChestPoint = (5 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+            }
+            else
+            {
+                MinChestPoint = 2 + (int)GameLogicManager.chestnutAppearanceRate;
+                MaxChestPoint = 5 + (int)GameLogicManager.chestnutAppearanceRate;
+            }
+            
         }
         else if (TileManager.instance.treeLevel >= 30)
         {
-            MinChestPoint = 2;
-            MaxChestPoint = 4;
+            if (GameLogicManager.doubleTheChestnutHarvest == 1)
+            {
+                MinChestPoint = (2 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+                MaxChestPoint = (4 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+            }
+            else
+            {
+                MinChestPoint = 2 + (int)GameLogicManager.chestnutAppearanceRate;
+                MaxChestPoint = 4 + (int)GameLogicManager.chestnutAppearanceRate;
+            }
+            
         }
         else if (TileManager.instance.treeLevel >= 20)
         {
-            MinChestPoint = 1;
-            MaxChestPoint = 4;
+            if (GameLogicManager.doubleTheChestnutHarvest == 1)
+            {
+                MinChestPoint = (1 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+                MaxChestPoint = (4 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+            }
+            else
+            {
+                MinChestPoint = 1 + (int)GameLogicManager.chestnutAppearanceRate;
+                MaxChestPoint = 4 + (int)GameLogicManager.chestnutAppearanceRate;
+            }
+            
         }
         else if (TileManager.instance.treeLevel >= 30)
         {
-            MinChestPoint = 1;
-            MaxChestPoint = 3;
+            if (GameLogicManager.doubleTheChestnutHarvest == 1)
+            {
+                MinChestPoint = (1 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+                MaxChestPoint = (3 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+            }
+            else
+            {
+                MinChestPoint = 1 + (int)GameLogicManager.chestnutAppearanceRate;
+                MaxChestPoint = 3 + (int)GameLogicManager.chestnutAppearanceRate;
+            }
+           
         }
         else
         {
-            MinChestPoint = 1;  
-            MaxChestPoint = 2;
+            if (GameLogicManager.doubleTheChestnutHarvest == 1)
+            {
+                MinChestPoint = (1 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+                MaxChestPoint = (2 + (int)GameLogicManager.chestnutAppearanceRate) * 2;
+            }
+            else
+            {
+                MinChestPoint = 1 + (int)GameLogicManager.chestnutAppearanceRate;
+                MaxChestPoint = 2 + (int)GameLogicManager.chestnutAppearanceRate;
+            }
+            
         }
         int RandomChestPoint = Random.Range(MinChestPoint+TreeMatchGameGameManager.instance.chestPointMin,MaxChestPoint+ TreeMatchGameGameManager.instance.chestPointMax);
         return RandomChestPoint;
@@ -342,33 +396,33 @@ public class Block : MonoBehaviour
         int maxFertilizer = 0;
         if(TileManager.instance.treeLevel >= 50)
         {
-            minFertilizer = 30;
-            maxFertilizer = 40;
+            minFertilizer = 30 + (int)GameLogicManager.MonsterRegenerationRate;
+            maxFertilizer = 40 + (int)GameLogicManager.MonsterRegenerationRate;
         }
         else if (TileManager.instance.treeLevel >= 40)
         {
-            minFertilizer = 25;
-            maxFertilizer = 30;
+            minFertilizer = 25 + (int)GameLogicManager.MonsterRegenerationRate;
+            maxFertilizer = 30 + (int)GameLogicManager.MonsterRegenerationRate;
         }
         else if (TileManager.instance.treeLevel >= 30)
         {
-            minFertilizer = 20;
-            maxFertilizer = 25;
+            minFertilizer = 20 + (int)GameLogicManager.MonsterRegenerationRate;
+            maxFertilizer = 25 + (int)GameLogicManager.MonsterRegenerationRate;
         }
         else if (TileManager.instance.treeLevel >= 20)
         {
-            minFertilizer = 15;
-            maxFertilizer = 20;
+            minFertilizer = 15 + (int)GameLogicManager.MonsterRegenerationRate;
+            maxFertilizer = 20 + (int)GameLogicManager.MonsterRegenerationRate;
         }
         else if (TileManager.instance.treeLevel >= 10)
         {
-            minFertilizer = 15;
-            maxFertilizer = 10;
+            minFertilizer = 15 + (int)GameLogicManager.MonsterRegenerationRate;
+            maxFertilizer = 10 + (int)GameLogicManager.MonsterRegenerationRate;
         }
         else
         {
-            minFertilizer = 5;
-            maxFertilizer = 10;
+            minFertilizer = 5 + (int)GameLogicManager.MonsterRegenerationRate;
+            maxFertilizer = 10 + (int)GameLogicManager.MonsterRegenerationRate;
         }
         int RandomFer = Random.Range(minFertilizer + TreeMatchGameGameManager.instance.fertilizerPointMin, maxFertilizer + TreeMatchGameGameManager.instance.fertilizerPointMax);
         return RandomFer;

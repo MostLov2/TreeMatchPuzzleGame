@@ -9,10 +9,10 @@ public class ComboSystem : MonoBehaviour
     public Sprite[] comboText;
     public SpriteRenderer comboImage;
     public static ComboSystem instance;
+    public AudioClip[] clip;
     private void Awake()
     {
         instance = this;
-        Debug.Log("Did");
         comboText = Resources.LoadAll<Sprite>("ComboText");
         comboImage = GameObject.FindGameObjectWithTag("MiddleCanvas").transform.GetChild(4).GetComponent<SpriteRenderer>();
     }
@@ -25,16 +25,19 @@ public class ComboSystem : MonoBehaviour
         {
             comboImage.sprite = comboText[0];
             comboImage.gameObject.SetActive(true);
+            SoundManager.instance.PlaySFX(clip, 0, 1, 1);
         }
         else if (TileManager.instance.comboCount >= 4)
         {
             comboImage.sprite = comboText[2];
             comboImage.gameObject.SetActive(true);
+            SoundManager.instance.PlaySFX(clip, 1, 1, 1);
         }
         else if (TileManager.instance.comboCount >= 2)
         {
             comboImage.sprite = comboText[1];
             comboImage.gameObject.SetActive(true);
+            SoundManager.instance.PlaySFX(clip, 2, 1, 1);
         }
         else
         {
