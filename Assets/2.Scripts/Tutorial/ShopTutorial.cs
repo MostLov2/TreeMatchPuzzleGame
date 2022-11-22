@@ -55,9 +55,9 @@ public class ShopTutorial : MonoBehaviour
         tutorialCheck = GameObject.FindGameObjectWithTag("Main").GetComponent<TutorialCheck>();
         if (!tutorialCheck.isDidTutorial.ShopTutorial)
         {
+            HighLightReset();
             PositionReset();
             GuideTextSet();
-            HighLightReset();
         }
         else
         {

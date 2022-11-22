@@ -21,7 +21,7 @@ public class TwoDLookAt : MonoBehaviour
         if (CountDownInPuzzle.isGameStart)
         {
             SoundManager.instance.PlaySFX(clip, 0, 1, 1);
-            transform.Rotate(Vector3.zero);
+            transform.rotation = Quaternion.Euler(Vector3.zero);
             delayTime = 5;
         }
     }
