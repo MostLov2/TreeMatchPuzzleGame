@@ -4,39 +4,47 @@ using UnityEngine;
 
 public class OPBlock : MonoBehaviour
 {
-    GameObject redBlockP;
-    GameObject yellowBlockP;
-    GameObject greenBlockP;
-    GameObject blueBlockP;
-    GameObject purpleBlockP;
-    GameObject beeBlockP;
-    GameObject beeHiveBlockP;
-    GameObject eggBlockP;
-    GameObject rabbitBlockP;
-    GameObject squirrelBlockP;
-    GameObject wevvilBlockP;
-    GameObject wormBlockP;
-    GameObject stickBlockP;
-    GameObject sprayBlockP;
-    GameObject eagleBlockP;
-    GameObject firecrackerP;
+    public GameObject redBlockP;
+    public GameObject yellowBlockP;
+    public GameObject greenBlockP;
+    public GameObject blueBlockP;
+    public GameObject purpleBlockP;
+    public GameObject beeBlockP;
+    public GameObject beeHiveBlockP;
+    public GameObject eggBlockP;
+    public GameObject rabbitBlockP;
+    public GameObject squirrelBlockP;
+    public GameObject wevvilBlockP;
+    public GameObject wormBlockP;
+    public GameObject stickBlockP;
+    public GameObject sprayBlockP;
+    public GameObject eagleBlockP;
+    public GameObject firecrackerRedP;
+    public GameObject firecrackerYellowP;
+    public GameObject firecrackerGreenP;
+    public GameObject firecrackerBlueP;
+    public GameObject firecrackerPurpleP;
 
-    GameObject[] redBlock;
-    GameObject[] yellowBlock;
-    GameObject[] greenBlock;
-    GameObject[] blueBlock;
-    GameObject[] purpleBlock;
-    GameObject[] beeBlock;
-    GameObject[] beeHiveBlock;
-    GameObject[] eggBlock;
-    GameObject[] rabbitBlock;
-    GameObject[] squirrelBlock;
-    GameObject[] wevvilBlock;
-    GameObject[] wormBlock;
-    GameObject[] stickBlock;
-    GameObject[] sprayBlock;
-    GameObject[] eagleBlock;
-    GameObject[] firecracker;
+    public GameObject[] redBlock;
+    public GameObject[] yellowBlock;
+    public GameObject[] greenBlock;
+    public GameObject[] blueBlock;
+    public GameObject[] purpleBlock;
+    public GameObject[] beeBlock;
+    public GameObject[] beeHiveBlock;
+    public GameObject[] eggBlock;
+    public GameObject[] rabbitBlock;
+    public GameObject[] squirrelBlock;
+    public GameObject[] wevvilBlock;
+    public GameObject[] wormBlock;
+    public GameObject[] stickBlock;
+    public GameObject[] sprayBlock;
+    public GameObject[] eagleBlock;
+    public GameObject[] firecrackerRed;
+    public GameObject[] firecrackerYellow;
+    public GameObject[] firecrackerGreen;
+    public GameObject[] firecrackerBlue;
+    public GameObject[] firecrackerPurple;
 
     GameObject[] targetPool;
     public static OPBlock instance;
@@ -61,7 +69,11 @@ public class OPBlock : MonoBehaviour
         stickBlockP = Resources.Load<GameObject>("ItemBlockScript/DragonflyStickItemBlock");
         sprayBlockP = Resources.Load<GameObject>("ItemBlockScript/SprayItemBlock");
         eagleBlockP = Resources.Load<GameObject>("ItemBlockScript/EagleItemBlock");
-        firecrackerP = Resources.Load<GameObject>("ItemBlockScript/FirecrackerBlock");
+        firecrackerRedP = Resources.Load<GameObject>("ItemBlockScript/FirecrackerBlockRed");
+        firecrackerYellowP = Resources.Load<GameObject>("ItemBlockScript/FirecrackerBlockYellow");
+        firecrackerGreenP = Resources.Load<GameObject>("ItemBlockScript/FirecrackerBlockGreen");
+        firecrackerBlueP = Resources.Load<GameObject>("ItemBlockScript/FirecrackerBlockBlue");
+        firecrackerPurpleP = Resources.Load<GameObject>("ItemBlockScript/FirecrackerBlockPurple");
 
         redBlock = new GameObject[100];
         yellowBlock = new GameObject[100];
@@ -78,7 +90,11 @@ public class OPBlock : MonoBehaviour
         stickBlock = new GameObject[10];
         sprayBlock = new GameObject[10];
         eagleBlock = new GameObject[10];
-        firecracker = new GameObject[10];
+        firecrackerRed = new GameObject[10];
+        firecrackerYellow = new GameObject[10];
+        firecrackerGreen = new GameObject[10];
+        firecrackerBlue = new GameObject[10];
+        firecrackerPurple = new GameObject[10];
         GetObject();
     }
     void GetObject()
@@ -188,16 +204,45 @@ public class OPBlock : MonoBehaviour
             eagleBlock[i].transform.localScale = Vector3.one;
             eagleBlock[i].SetActive(false);
         }
-        for (int i = 0; i < firecracker.Length; i++)
+        for (int i = 0; i < firecrackerRed.Length; i++)
         {
-            firecracker[i] = Instantiate<GameObject>(firecrackerP);
-            firecracker[i].transform.SetParent(transform);
-            firecracker[i].transform.localScale = Vector3.one;
-            firecracker[i].SetActive(false);
+            firecrackerRed[i] = Instantiate<GameObject>(firecrackerRedP);
+            firecrackerRed[i].transform.SetParent(transform);
+            firecrackerRed[i].transform.localScale = Vector3.one;
+            firecrackerRed[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerYellow.Length; i++)
+        {
+            firecrackerYellow[i] = Instantiate<GameObject>(firecrackerYellowP);
+            firecrackerYellow[i].transform.SetParent(transform);
+            firecrackerYellow[i].transform.localScale = Vector3.one;
+            firecrackerYellow[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerGreen.Length; i++)
+        {
+            firecrackerGreen[i] = Instantiate<GameObject>(firecrackerGreenP);
+            firecrackerGreen[i].transform.SetParent(transform);
+            firecrackerGreen[i].transform.localScale = Vector3.one;
+            firecrackerGreen[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerBlue.Length; i++)
+        {
+            firecrackerBlue[i] = Instantiate<GameObject>(firecrackerBlueP);
+            firecrackerBlue[i].transform.SetParent(transform);
+            firecrackerBlue[i].transform.localScale = Vector3.one;
+            firecrackerBlue[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerPurple.Length; i++)
+        {
+            firecrackerPurple[i] = Instantiate<GameObject>(firecrackerPurpleP);
+            firecrackerPurple[i].transform.SetParent(transform);
+            firecrackerPurple[i].transform.localScale = Vector3.one;
+            firecrackerPurple[i].SetActive(false);
         }
     }
     /// <summary>
-    /// 0 redBlock 1 yellowBlock 2 GreenBlock 3 BlueBlock 4 purpleBlock 5 beeBlock 6 beeHiveBlock 7 eggBlock 8 rabbitBlock 9 squirrelBLock 10 wevvilBlock 11 wormBlock 12 stickBlock 13 sprayBlock 14 eagleBlock 15 firecrackerBlock
+    /// 0 redBlock 1 yellowBlock 2 GreenBlock 3 BlueBlock 4 purpleBlock 5 beeBlock 6 beeHiveBlock 7 eggBlock 8 rabbitBlock 9 squirrelBLock 10 wevvilBlock 11 wormBlock 12 stickBlock 13 sprayBlock 14 eagleBlock 15 firecrackerBlockRed
+    /// 16firecrackerYellow 17firecrackerGreen 18firecrackerBlue 19firecrackerPurple
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -251,7 +296,19 @@ public class OPBlock : MonoBehaviour
                 targetPool = eagleBlock;
                 break;
             case 15:
-                targetPool = firecracker;
+                targetPool = firecrackerRed;
+                break;
+            case 16:
+                targetPool = firecrackerYellow;
+                break;
+            case 17:
+                targetPool = firecrackerGreen;
+                break;
+            case 18:
+                targetPool = firecrackerBlue;
+                break;
+            case 19:
+                targetPool = firecrackerPurple;
                 break;
             default:
                 break;

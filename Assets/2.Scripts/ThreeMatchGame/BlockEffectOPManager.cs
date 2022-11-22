@@ -28,6 +28,16 @@ public class BlockEffectOPManager : MonoBehaviour
     public GameObject stickEffectP;
     public GameObject sprayEffectP;
     public GameObject popEffectP;
+    public GameObject firecrackerEffectRedP;
+    public GameObject firecrackerEffectYellowP;
+    public GameObject firecrackerEffectGreenP;
+    public GameObject firecrackerEffectBlueP;
+    public GameObject firecrackerEffectPurpleP;
+    public GameObject firecrackerBoomEffectRedP;
+    public GameObject firecrackerBoomEffectYellowP;
+    public GameObject firecrackerBoomEffectGreenP;
+    public GameObject firecrackerBoomEffectBlueP;
+    public GameObject firecrackerBoomEffectPurpleP;
 
     public GameObject[] redBlockEffect;
     public GameObject[] yellowBlockEffect;
@@ -53,7 +63,17 @@ public class BlockEffectOPManager : MonoBehaviour
     public GameObject[] stickEffect;
     public GameObject[] sprayEffect;
     public GameObject[] popEffect;
-    
+    public GameObject[] firecrackerEffectRed;
+    public GameObject[] firecrackerEffectYellow;
+    public GameObject[] firecrackerEffectGreen;
+    public GameObject[] firecrackerEffectBlue;
+    public GameObject[] firecrackerEffectPurple;
+    public GameObject[] firecrackerBoomEffectRed;
+    public GameObject[] firecrackerBoomEffectYellow;
+    public GameObject[] firecrackerBoomEffectGreen;
+    public GameObject[] firecrackerBoomEffectBlue;
+    public GameObject[] firecrackerBoomEffectPurple;
+
 
     public GameObject[] targetPool;
     public static BlockEffectOPManager instance;
@@ -87,6 +107,16 @@ public class BlockEffectOPManager : MonoBehaviour
         stickEffectP = Resources.Load<GameObject>("BlockEffect/BoomEffect/BoomEffect");
         sprayEffectP = Resources.Load<GameObject>("BlockEffect/SprayShot");
         popEffectP = Resources.Load<GameObject>("BlockEffect/ConfettiBlastRainbow");
+        firecrackerEffectRedP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FirecrackerRedEffect");
+        firecrackerEffectYellowP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FirecrackerYellowEffect");
+        firecrackerEffectGreenP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FirecrackerGreenEffect");
+        firecrackerEffectBlueP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FirecrackerBlueEffect");
+        firecrackerEffectPurpleP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FirecrackerPurpleEffect");
+        firecrackerBoomEffectRedP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FireworkRed");
+        firecrackerBoomEffectYellowP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FireworkYellow");
+        firecrackerBoomEffectGreenP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FireworkGreen");
+        firecrackerBoomEffectBlueP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FireworkBlue");
+        firecrackerBoomEffectPurpleP = Resources.Load<GameObject>("BlockEffect/FirecrackerEffect/FireworkPurple");
 
         redBlockEffect = new GameObject[100];
         yellowBlockEffect = new GameObject[100];
@@ -112,6 +142,16 @@ public class BlockEffectOPManager : MonoBehaviour
         stickEffect = new GameObject[10];
         sprayEffect = new GameObject[10];
         popEffect = new GameObject[30];
+        firecrackerEffectRed = new GameObject[10];
+        firecrackerEffectYellow = new GameObject[10];
+        firecrackerEffectGreen = new GameObject[10];
+        firecrackerEffectBlue = new GameObject[10];
+        firecrackerEffectPurple = new GameObject[10];
+        firecrackerBoomEffectRed = new GameObject[10];
+        firecrackerBoomEffectYellow = new GameObject[10];
+        firecrackerBoomEffectGreen = new GameObject[10];
+        firecrackerBoomEffectBlue = new GameObject[10];
+        firecrackerBoomEffectPurple = new GameObject[10];
     }
     private void Start()
     {
@@ -288,9 +328,70 @@ public class BlockEffectOPManager : MonoBehaviour
             popEffect[i].transform.SetParent(GameObject.FindGameObjectWithTag("FeverTimeCanvas").transform);
             popEffect[i].SetActive(false);
         }
+        for (int i = 0; i < firecrackerEffectRed.Length; i++)
+        {
+            firecrackerEffectRed[i] = Instantiate<GameObject>(firecrackerEffectRedP, transform.position, transform.rotation);
+            firecrackerEffectRed[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerEffectRed[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerEffectYellow.Length; i++)
+        {
+            firecrackerEffectYellow[i] = Instantiate<GameObject>(firecrackerEffectYellowP, transform.position, transform.rotation);
+            firecrackerEffectYellow[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerEffectYellow[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerEffectGreen.Length; i++)
+        {
+            firecrackerEffectGreen[i] = Instantiate<GameObject>(firecrackerEffectGreenP, transform.position, transform.rotation);
+            firecrackerEffectGreen[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerEffectGreen[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerEffectBlue.Length; i++)
+        {
+            firecrackerEffectBlue[i] = Instantiate<GameObject>(firecrackerEffectBlueP, transform.position, transform.rotation);
+            firecrackerEffectBlue[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerEffectBlue[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerEffectPurple.Length; i++)
+        {
+            firecrackerEffectPurple[i] = Instantiate<GameObject>(firecrackerEffectPurpleP, transform.position, transform.rotation);
+            firecrackerEffectPurple[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerEffectPurple[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerBoomEffectRed.Length; i++)
+        {
+            firecrackerBoomEffectRed[i] = Instantiate<GameObject>(firecrackerBoomEffectRedP, transform.position, transform.rotation);
+            firecrackerBoomEffectRed[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerBoomEffectRed[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerBoomEffectYellow.Length; i++)
+        {
+            firecrackerBoomEffectYellow[i] = Instantiate<GameObject>(firecrackerBoomEffectYellowP, transform.position, transform.rotation);
+            firecrackerBoomEffectYellow[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerBoomEffectYellow[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerBoomEffectGreen.Length; i++)
+        {
+            firecrackerBoomEffectGreen[i] = Instantiate<GameObject>(firecrackerBoomEffectGreenP, transform.position, transform.rotation);
+            firecrackerBoomEffectGreen[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerBoomEffectGreen[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerBoomEffectBlue.Length; i++)
+        {
+            firecrackerBoomEffectBlue[i] = Instantiate<GameObject>(firecrackerBoomEffectBlueP, transform.position, transform.rotation);
+            firecrackerBoomEffectBlue[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerBoomEffectBlue[i].SetActive(false);
+        }
+        for (int i = 0; i < firecrackerBoomEffectPurple.Length; i++)
+        {
+            firecrackerBoomEffectPurple[i] = Instantiate<GameObject>(firecrackerBoomEffectPurpleP, transform.position, transform.rotation);
+            firecrackerBoomEffectPurple[i].transform.SetParent(GameObject.FindGameObjectWithTag("MiddleCanvas").transform);
+            firecrackerBoomEffectPurple[i].SetActive(false);
+        }
     }
     /// <summary>
     /// 0. »¡°£»ö ¹ã 1. ³ë¶û 2. ÃÊ·Ï3. ÆÄ¶û 4. º¸¶ó 5. ÁøÈë 6 ¾Ë Á×À½ 7.¾Ö¹ú·¹ Á×À½ 8. ÁøÈ­ 9.¹Ù±¸¹Ì Á×À½ 10. ´Ù¶÷Áã ÀÌÆåÆ® 11. ¸ó½ºÅÍ È÷Æ® 12. ¹ú ½ºÅ³ 13.¹úÄ§ ½ºÅ³ 14. ¼ö¸®°Ë 15.Åä³¢ ³ª¹« ÀÌÆåÆ® 16. ³ª¹« »ç¶óÁö´Â ÀÌÆåÆ® 17 ³ª¹«À§ ¼ö¸®°Ë ÀÌÆåÆ® 18 ¹ã ÀÌÆåÆ® 19 ºñ·á ÀÌÆåÆ® 20 µ¶¼ö¸® ÀÌÆåÆ® 21.ÀáÀÚ¸®Ã¤ÀÌÆåÆ®22.½ºÇÁ·¹ÀÌÀÌÆåÆ® 23.ÆË ÀÌÆÑÆ®
+    /// 24 ÆøÁ×ÀÌÆåÆ®»¡°­ 25 ÆøÁ×ÀÌÆåÆ®³ë¶û26 ÆøÁ×ÀÌÆåÆ®ÃÊ·Ï 27 ÆøÁ×ÀÌÆåÆ®ÆÄ¶û28 ÆøÁ×ÀÌÆåÆ®º¸¶ó 29ÆøÁ×»¡°­ 30ÆøÁ×³ë¶û 31ÆøÁ×ÃÊ·Ï 32ÆøÁ×ÆÄ¶û 33ÆøÁ×º¸¶ó
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
@@ -370,6 +471,37 @@ public class BlockEffectOPManager : MonoBehaviour
             case 23:
                 targetPool = popEffect;
                 break;
+            case 24:
+                targetPool = firecrackerEffectRed;
+                break;
+            case 25:
+                targetPool = firecrackerEffectYellow;
+                break;
+            case 26:
+                targetPool = firecrackerEffectGreen;
+                break;
+            case 27:
+                targetPool = firecrackerEffectBlue;
+                break;
+            case 28:
+                targetPool = firecrackerEffectPurple;
+                break;
+            case 29:
+                targetPool = firecrackerBoomEffectRed;
+                break;
+            case 30:
+                targetPool = firecrackerBoomEffectYellow;
+                break;
+            case 31:
+                targetPool = firecrackerBoomEffectGreen;
+                break;
+            case 32:
+                targetPool = firecrackerBoomEffectBlue;
+                break;
+            case 33:
+                targetPool = firecrackerBoomEffectPurple;
+                break;
+
             default:
                 break;
         }

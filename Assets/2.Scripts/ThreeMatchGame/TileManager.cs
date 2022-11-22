@@ -59,7 +59,7 @@ public class TileManager : MonoBehaviour
     public int spraySkillLevel;
     public bool hpUp = false;
     public Transform StartGame;
-    bool useItem = false;
+    public bool useItem = false;
     #region Block
     public tileRowArrayY arrayRow;
     public tileColumnArrayX arrayColumn;
@@ -688,7 +688,6 @@ public class TileManager : MonoBehaviour
         if(isHaveDestroyBlock != 0&&CountDownInPuzzle.isGameStart)
         {
             comboCount++;
-            Debug.Log(comboCount);
             if (comboCount >= 6)
             {
                 ComboSystem.instance.ComboTextUp();
@@ -3739,19 +3738,67 @@ public class TileManager : MonoBehaviour
                         {
                             if (j == 0)
                             {
-                                isHaveDestroyBlock++;
-                                GameObject firecrackerBlock = OPBlock.instance.SetObject(15);
-                                firecrackerBlock.transform.position = arrayRow.tilesY[x].tilesScriptX[i + j].transform.position;
-                                arrayRow.tilesY[x].tilesScriptX[i + j].block.gameObject.SetActive(false);
-                                arrayRow.tilesY[x].tilesScriptX[i + j].block = firecrackerBlock;
-                                arrayRow.tilesY[x].tilesScriptX[i + j].blockColor = 15;
-                                arrayRow.tilesY[x].tilesScriptX[i + j].isEmpty = false;
-                                destroyTile.Add(arrayRow.tilesY[x].tilesScriptX[i + j]);
+                                if(arrayRow.tilesY[x].tilesScriptX[i].blockColor == 0)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(15);
+                                    firecrackerBlock.transform.position = arrayRow.tilesY[x].tilesScriptX[i + j].transform.position;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block = firecrackerBlock;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].blockColor = 15;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayRow.tilesY[x].tilesScriptX[i + j]);
+                                }
+                                if (arrayRow.tilesY[x].tilesScriptX[i].blockColor == 1)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(16);
+                                    firecrackerBlock.transform.position = arrayRow.tilesY[x].tilesScriptX[i + j].transform.position;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block = firecrackerBlock;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].blockColor = 16;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayRow.tilesY[x].tilesScriptX[i + j]);
+                                }
+                                if (arrayRow.tilesY[x].tilesScriptX[i].blockColor == 2)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(17);
+                                    firecrackerBlock.transform.position = arrayRow.tilesY[x].tilesScriptX[i + j].transform.position;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block = firecrackerBlock;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].blockColor = 17;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayRow.tilesY[x].tilesScriptX[i + j]);
+                                }
+                                if (arrayRow.tilesY[x].tilesScriptX[i].blockColor == 3)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(18);
+                                    firecrackerBlock.transform.position = arrayRow.tilesY[x].tilesScriptX[i + j].transform.position;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block = firecrackerBlock;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].blockColor = 15;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayRow.tilesY[x].tilesScriptX[i + j]);
+                                }
+                                if (arrayRow.tilesY[x].tilesScriptX[i].blockColor == 4)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(19);
+                                    firecrackerBlock.transform.position = arrayRow.tilesY[x].tilesScriptX[i + j].transform.position;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].block = firecrackerBlock;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].blockColor = 19;
+                                    arrayRow.tilesY[x].tilesScriptX[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayRow.tilesY[x].tilesScriptX[i + j]);
+                                }
                             }
                             else
                             {
-                                arrayRow.tilesY[x].tilesScriptX[i + j].block.transform.DOMove(arrayRow.tilesY[x].tilesScriptX[i + 2].transform.position, 0.3f);
+                                arrayRow.tilesY[x].tilesScriptX[i + j].block.transform.DOMove(arrayRow.tilesY[x].tilesScriptX[i + 0].transform.position, 0.3f);
                                 arrayRow.tilesY[x].tilesScriptX[i + j].isEmpty = true;
+                                arrayRow.tilesY[x].tilesScriptX[i + j].blockColor = 250;
                                 destroyBlock.Add(arrayRow.tilesY[x].tilesScriptX[i + j].block.gameObject);
                                 destroyTile.Add(arrayRow.tilesY[x].tilesScriptX[i + j]);
                             }
@@ -3760,6 +3807,7 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
+
         for (int x = 0; x < 8; x++)
         {
             for (int i = 0; i < 6; i++)
@@ -3774,20 +3822,68 @@ public class TileManager : MonoBehaviour
                         {
                             if (j == 0)
                             {
-                                isHaveDestroyBlock++;
-                                GameObject firecrackerBlock = OPBlock.instance.SetObject(15);
-                                firecrackerBlock.transform.position = arrayColumn.tilesX[x].tilesScriptY[i + j].transform.position;
-                                arrayColumn.tilesX[x].tilesScriptY[i + j].block.gameObject.SetActive(false);
-                                arrayColumn.tilesX[x].tilesScriptY[i + j].block = firecrackerBlock;
-                                arrayColumn.tilesX[x].tilesScriptY[i + j].blockColor = 15;
-                                arrayColumn.tilesX[x].tilesScriptY[i + j].isEmpty = false;
-                                destroyTile.Add(arrayColumn.tilesX[x].tilesScriptY[i + j]);
+                                if(arrayColumn.tilesX[x].tilesScriptY[i].blockColor == 0)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(15);
+                                    firecrackerBlock.transform.position = arrayColumn.tilesX[x].tilesScriptY[i + j].transform.position;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block.gameObject.SetActive(false);
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block = firecrackerBlock;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].blockColor = 15;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayColumn.tilesX[x].tilesScriptY[i + j]);
+                                }
+                                else if (arrayColumn.tilesX[x].tilesScriptY[i].blockColor == 1)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(16);
+                                    firecrackerBlock.transform.position = arrayColumn.tilesX[x].tilesScriptY[i + j].transform.position;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block.gameObject.SetActive(false);
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block = firecrackerBlock;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].blockColor = 16;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayColumn.tilesX[x].tilesScriptY[i + j]);
+                                }
+                                else if (arrayColumn.tilesX[x].tilesScriptY[i].blockColor == 2)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(17);
+                                    firecrackerBlock.transform.position = arrayColumn.tilesX[x].tilesScriptY[i + j].transform.position;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block.gameObject.SetActive(false);
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block = firecrackerBlock;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].blockColor = 17;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayColumn.tilesX[x].tilesScriptY[i + j]);
+                                }
+                                else if (arrayColumn.tilesX[x].tilesScriptY[i].blockColor == 3)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(18);
+                                    firecrackerBlock.transform.position = arrayColumn.tilesX[x].tilesScriptY[i + j].transform.position;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block.gameObject.SetActive(false);
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block = firecrackerBlock;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].blockColor = 18;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayColumn.tilesX[x].tilesScriptY[i + j]);
+                                }
+                                else if (arrayColumn.tilesX[x].tilesScriptY[i].blockColor == 4)
+                                {
+                                    isHaveDestroyBlock++;
+                                    GameObject firecrackerBlock = OPBlock.instance.SetObject(19);
+                                    firecrackerBlock.transform.position = arrayColumn.tilesX[x].tilesScriptY[i + j].transform.position;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block.gameObject.SetActive(false);
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].block = firecrackerBlock;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].blockColor = 19;
+                                    arrayColumn.tilesX[x].tilesScriptY[i + j].isEmpty = false;
+                                    destroyTile.Add(arrayColumn.tilesX[x].tilesScriptY[i + j]);
+                                }
                             }
                             else
                             {
                                 isHaveDestroyBlock++;
-                                arrayColumn.tilesX[x].tilesScriptY[i + j].block.transform.DOMove(arrayColumn.tilesX[x].tilesScriptY[i + 2].transform.position, 0.3f);
+                                arrayColumn.tilesX[x].tilesScriptY[i + j].block.transform.DOMove(arrayColumn.tilesX[x].tilesScriptY[i + 0].transform.position, 0.3f);
                                 arrayColumn.tilesX[x].tilesScriptY[i + j].isEmpty = true;
+                                arrayColumn.tilesX[x].tilesScriptY[i + j].blockColor = 250;
                                 destroyBlock.Add(arrayColumn.tilesX[x].tilesScriptY[i + j].block.gameObject);
                                 destroyTile.Add(arrayColumn.tilesX[x].tilesScriptY[i + j]);
                             }
@@ -3812,19 +3908,67 @@ public class TileManager : MonoBehaviour
                                 {
                                     if (j == 0 && y == 0)
                                     {
-                                        isHaveDestroyBlock++;
-                                        GameObject firecrackerBlock = OPBlock.instance.SetObject(15);
-                                        firecrackerBlock.transform.position = arrayRow.tilesY[x + y].tilesScriptX[i + j].transform.position;
-                                        arrayRow.tilesY[x + y].tilesScriptX[i + j].block.gameObject.SetActive(false);
-                                        arrayRow.tilesY[x + y].tilesScriptX[i + j].block = firecrackerBlock;
-                                        arrayRow.tilesY[x + y].tilesScriptX[i + j].blockColor = 15;
-                                        arrayRow.tilesY[x + y].tilesScriptX[i + j].isEmpty = false;
-                                        //destroyTile.Add(arrayRow.tilesY[x + y].tilesScriptX[i + j]);
+                                        if(arrayRow.tilesY[x].tilesScriptX[i].blockColor == 0)
+                                        {
+                                            isHaveDestroyBlock++;
+                                            GameObject firecrackerBlock = OPBlock.instance.SetObject(15);
+                                            firecrackerBlock.transform.position = arrayRow.tilesY[x + y].tilesScriptX[i + j].transform.position;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block = firecrackerBlock;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].blockColor = 15;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].isEmpty = false;
+                                            destroyTile.Add(arrayRow.tilesY[x + y].tilesScriptX[i + j]);
+                                        }
+                                        else if (arrayRow.tilesY[x].tilesScriptX[i].blockColor == 1)
+                                        {
+                                            isHaveDestroyBlock++;
+                                            GameObject firecrackerBlock = OPBlock.instance.SetObject(16);
+                                            firecrackerBlock.transform.position = arrayRow.tilesY[x + y].tilesScriptX[i + j].transform.position;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block = firecrackerBlock;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].blockColor = 16;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].isEmpty = false;
+                                            destroyTile.Add(arrayRow.tilesY[x + y].tilesScriptX[i + j]);
+                                        }
+                                        else if (arrayRow.tilesY[x].tilesScriptX[i].blockColor == 2)
+                                        {
+                                            isHaveDestroyBlock++;
+                                            GameObject firecrackerBlock = OPBlock.instance.SetObject(17);
+                                            firecrackerBlock.transform.position = arrayRow.tilesY[x + y].tilesScriptX[i + j].transform.position;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block = firecrackerBlock;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].blockColor = 17;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].isEmpty = false;
+                                            destroyTile.Add(arrayRow.tilesY[x + y].tilesScriptX[i + j]);
+                                        }
+                                        else if (arrayRow.tilesY[x].tilesScriptX[i].blockColor == 3)
+                                        {
+                                            isHaveDestroyBlock++;
+                                            GameObject firecrackerBlock = OPBlock.instance.SetObject(18);
+                                            firecrackerBlock.transform.position = arrayRow.tilesY[x + y].tilesScriptX[i + j].transform.position;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block = firecrackerBlock;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].blockColor = 18;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].isEmpty = false;
+                                            destroyTile.Add(arrayRow.tilesY[x + y].tilesScriptX[i + j]);
+                                        }
+                                        else if (arrayRow.tilesY[x].tilesScriptX[i].blockColor == 4)
+                                        {
+                                            isHaveDestroyBlock++;
+                                            GameObject firecrackerBlock = OPBlock.instance.SetObject(19);
+                                            firecrackerBlock.transform.position = arrayRow.tilesY[x + y].tilesScriptX[i + j].transform.position;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block.gameObject.SetActive(false);
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].block = firecrackerBlock;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].blockColor = 19;
+                                            arrayRow.tilesY[x + y].tilesScriptX[i + j].isEmpty = false;
+                                            destroyTile.Add(arrayRow.tilesY[x + y].tilesScriptX[i + j]);
+                                        }
                                     }
                                     else
                                     {
-                                        arrayRow.tilesY[x + y].tilesScriptX[i + j].block.transform.DOMove(arrayRow.tilesY[x].tilesScriptX[i + 2].transform.position, 0.3f);
+                                        arrayRow.tilesY[x + y].tilesScriptX[i + j].block.transform.DOMove(arrayRow.tilesY[x].tilesScriptX[i + 0].transform.position, 0.3f);
                                         arrayRow.tilesY[x + y].tilesScriptX[i + j].isEmpty = true;
+                                        arrayRow.tilesY[x + y].tilesScriptX[i + j].blockColor = 250;
                                         destroyBlock.Add(arrayRow.tilesY[x + y].tilesScriptX[i + j].block.gameObject);
                                         destroyTile.Add(arrayRow.tilesY[x + y].tilesScriptX[i + j]);
                                     }
