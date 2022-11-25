@@ -57,7 +57,7 @@ public class TwoDLookAt : MonoBehaviour
     {
         rb.isKinematic = true;
         rb.isKinematic = false;
-        dir = (target.transform.position - transform.position).normalized;
+        dir = (target.GetComponent<Tile>().block.transform.position - transform.position).normalized;
         float angle = Mathf.Atan2(dir.x, dir.y)*Mathf.Rad2Deg;
         rotTarget = Quaternion.AngleAxis(angle, Vector3.back);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotTarget, Time.deltaTime * rotspeed);

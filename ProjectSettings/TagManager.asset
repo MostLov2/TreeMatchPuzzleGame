@@ -78,6 +78,7 @@ TagManager:
   - MoreHighCanvas
   - FeverTimeCanvas
   - FeverCountCanvas
+  - ChestnutBlock
   layers:
   - Default
   - TransparentFX

@@ -850,34 +850,42 @@ public class TileManager : MonoBehaviour
         for (int i = 8; i >= line0.Count; i--)
         {
             arrayColumn.tilesX[7].tilesScriptY[i].isEmpty = true;
+            arrayColumn.tilesX[7].tilesScriptY[i].block = null;
         }
         for (int i = 8; i >= line1.Count; i--)
         {
             arrayColumn.tilesX[6].tilesScriptY[i].isEmpty = true;
+            arrayColumn.tilesX[6].tilesScriptY[i].block = null;
         }
         for (int i = 8; i >= line2.Count; i--)
         {
             arrayColumn.tilesX[5].tilesScriptY[i].isEmpty = true;
+            arrayColumn.tilesX[5].tilesScriptY[i].block = null;
         }
         for (int i = 8; i >= line3.Count; i--)
         {
             arrayColumn.tilesX[4].tilesScriptY[i].isEmpty = true;
+            arrayColumn.tilesX[4].tilesScriptY[i].block = null;
         }
         for (int i = 8; i >= line4.Count; i--)
         {
             arrayColumn.tilesX[3].tilesScriptY[i].isEmpty = true;
+            arrayColumn.tilesX[3].tilesScriptY[i].block = null;
         }
         for (int i = 8; i >= line5.Count; i--)
         {
             arrayColumn.tilesX[2].tilesScriptY[i].isEmpty = true;
+            arrayColumn.tilesX[2].tilesScriptY[i].block = null;
         }
         for (int i = 8; i >= line6.Count; i--)
         {
             arrayColumn.tilesX[1].tilesScriptY[i].isEmpty = true;
+            arrayColumn.tilesX[1].tilesScriptY[i].block = null;
         }
         for (int i = 8; i >= line7.Count; i--)
         {
             arrayColumn.tilesX[0].tilesScriptY[i].isEmpty = true;
+            arrayColumn.tilesX[0].tilesScriptY[i].block = null;
         }
         //라인에 색 바꾸기
         for (int i = 0; i < line0.Count; i++)
@@ -1274,13 +1282,16 @@ public class TileManager : MonoBehaviour
         bool noting = false;
         for (int i = 0; i < tiles.Length; i++)
         {
-            if (tiles[i].GetComponent<Tile>().block.GetComponent<Block>().hp <= 0 && tiles[i].GetComponent<Tile>().block != null)
+            if (tiles[i].GetComponent<Tile>().block != null)
             {
-                if (tiles[i].GetComponent<Tile>().block.GetComponent<Animator>() != null)
+                if (tiles[i].GetComponent<Tile>().block.GetComponent<Block>().hp <= 0 && tiles[i].GetComponent<Tile>().block != null)
                 {
-                    tiles[i].GetComponent<Tile>().block.GetComponent<Animator>().SetTrigger("IsDead");
-                    tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
-                    noting = true;
+                    if (tiles[i].GetComponent<Tile>().block.GetComponent<Animator>() != null)
+                    {
+                        tiles[i].GetComponent<Tile>().block.GetComponent<Animator>().SetTrigger("IsDead");
+                        tiles[i].GetComponent<Tile>().block.GetComponent<Block>().ScoreUp();
+                        noting = true;
+                    }
                 }
             }
         }
@@ -1472,14 +1483,17 @@ public class TileManager : MonoBehaviour
         {
             if (hpUp)
             {
-                if (tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount % 3 == 0 && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount != 0)
+                if (tiles[i].GetComponent<Tile>().block != null)
                 {
-                    if (tiles[i].GetComponent<Tile>().blockColor == 6)
+                    if (tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount % 3 == 0 && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().SwapCount != 0 && treeLevel >= 30)
                     {
-                        if (tiles[i].GetComponent<Tile>().block.GetComponent<Block>().hp <= 4)
+                        if (tiles[i].GetComponent<Tile>().blockColor == 6)
                         {
-                            tiles[i].GetComponent<Tile>().block.GetComponent<Block>().hp++;
-                            hpUp = false;
+                            if (tiles[i].GetComponent<Tile>().block.GetComponent<Block>().hp <= 4)
+                            {
+                                tiles[i].GetComponent<Tile>().block.GetComponent<Block>().hp++;
+                                hpUp = false;
+                            }
                         }
                     }
                 }
@@ -1581,7 +1595,7 @@ public class TileManager : MonoBehaviour
     /// <summary>
     /// 다람쥐가 4턴이상 생존 했을때 사용하는 스킬 함수
     /// </summary>
-    public void SquirrelAttack()
+    public void SquirrelAttack()  
     {
         for (int i = 0; i < tiles.Length; i++)
         {
@@ -1658,32 +1672,35 @@ public class TileManager : MonoBehaviour
     {
         for (int i = 0;i < tiles.Length; i++)
         {
-            if(tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor ==255 && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().transform.GetChild(0) != null&& tiles[i].GetComponent<Tile>().block.GetComponent<Block>().transform.GetChild(0).GetComponent<StunEffect>().SwapCount>=2)
+            if (tiles[i].GetComponent<Tile>().block != null)
             {
-                if(tiles[i].GetComponent<Tile>().block.name == "RedBlock(Clone)")
+                if (tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor == 255 && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().transform.GetChild(0) != null && tiles[i].GetComponent<Tile>().block.GetComponent<Block>().transform.GetChild(0).GetComponent<StunEffect>().SwapCount >= 2)
                 {
-                    tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 0;
-                    tiles[i].GetComponent<Tile>().blockColor = 0;
-                }
-                else if (tiles[i].GetComponent<Tile>().block.name == "YellowBlock(Clone)")
-                {
-                    tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 1;
-                    tiles[i].GetComponent<Tile>().blockColor = 1;
-                }
-                else if (tiles[i].GetComponent<Tile>().block.name == "GreenBlock(Clone)")
-                {
-                    tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 2;
-                    tiles[i].GetComponent<Tile>().blockColor = 2;
-                }
-                else if (tiles[i].GetComponent<Tile>().block.name == "BlueBlock(Clone)")
-                {
-                    tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 3;
-                    tiles[i].GetComponent<Tile>().blockColor = 3;
-                }
-                else if (tiles[i].GetComponent<Tile>().block.name == "PurpleBlock(Clone)")
-                {
-                    tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 4;
-                    tiles[i].GetComponent<Tile>().blockColor = 4;
+                    if (tiles[i].GetComponent<Tile>().block.name == "RedBlock(Clone)")
+                    {
+                        tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 0;
+                        tiles[i].GetComponent<Tile>().blockColor = 0;
+                    }
+                    else if (tiles[i].GetComponent<Tile>().block.name == "YellowBlock(Clone)")
+                    {
+                        tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 1;
+                        tiles[i].GetComponent<Tile>().blockColor = 1;
+                    }
+                    else if (tiles[i].GetComponent<Tile>().block.name == "GreenBlock(Clone)")
+                    {
+                        tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 2;
+                        tiles[i].GetComponent<Tile>().blockColor = 2;
+                    }
+                    else if (tiles[i].GetComponent<Tile>().block.name == "BlueBlock(Clone)")
+                    {
+                        tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 3;
+                        tiles[i].GetComponent<Tile>().blockColor = 3;
+                    }
+                    else if (tiles[i].GetComponent<Tile>().block.name == "PurpleBlock(Clone)")
+                    {
+                        tiles[i].GetComponent<Tile>().block.GetComponent<Block>().blockColor = 4;
+                        tiles[i].GetComponent<Tile>().blockColor = 4;
+                    }
                 }
             }
         }
